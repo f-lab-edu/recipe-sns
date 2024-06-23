@@ -7,7 +7,6 @@
 ## 사용기술
 - Java 17
 - SpringBoot 3.3.0
-- Spring Data JDBC
 - JUnit 5
 - MySql
 - Naver Cloud Platform
