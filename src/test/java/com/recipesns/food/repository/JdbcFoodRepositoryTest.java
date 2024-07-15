@@ -15,7 +15,7 @@ class JdbcFoodRepositoryTest {
 
     @Test
     void save() {
-        Food food = new Food("음식 이름", 140, 50.2, 30.2, 12, 511);
+        Food food = new Food("음식 이름", 140, "DS1234", 50.2, 30.2, 12, 511);
         Food savedFood = this.jdbcFoodRepository.save(food);
         assertThat(savedFood.getId()).isEqualTo(1L);
     }

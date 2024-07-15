@@ -9,6 +9,7 @@ public class Food {
     private Long id;
     private String foodName;
     private Integer foodSize;
+    private String foodCode;
     private double carbohydrate;
     private double protein;
 
@@ -17,9 +18,10 @@ public class Food {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public Food(String foodName, Integer foodSize, double carbohydrate, double protein, double fat, double calorie) {
+    public Food(String foodName, Integer foodSize, String foodCode, double carbohydrate, double protein, double fat, double calorie) {
         this.foodName = foodName;
         this.foodSize = foodSize;
+        this.foodCode = foodCode;
         this.carbohydrate = carbohydrate;
         this.protein = protein;
         this.fat = fat;
