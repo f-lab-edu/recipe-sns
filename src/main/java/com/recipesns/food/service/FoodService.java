@@ -1,5 +1,6 @@
 package com.recipesns.food.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.recipesns.food.FoodSearchCond;
 import com.recipesns.food.domain.Food;
 import com.recipesns.food.repository.JdbcFoodRepository;
@@ -16,7 +17,7 @@ public class FoodService {
     private final JdbcFoodRepository foodRepository;
     private final FoodProvider foodProvider;
 
-    public void updateFood(String today) {
+    public void updateFood(String today) throws JsonProcessingException {
         List<Food> foodList = foodProvider.getFoods(today);
         for (Food food : foodList) {
             foodRepository.update(food);

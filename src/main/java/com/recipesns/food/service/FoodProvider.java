@@ -1,5 +1,6 @@
 package com.recipesns.food.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.recipesns.food.domain.Food;
@@ -12,23 +13,20 @@ import java.util.List;
 
 @Component
 public class FoodProvider {
-    public List<Food> getFoods(String today) {
+    public List<Food> getFoods(String today) throws JsonProcessingException {
 
         String body = getBody(today);
-
+        System.out.println(body);
         ObjectMapper objectMapper = new ObjectMapper();
         List<Food> foodList = new ArrayList<>();
 
-        try {
-            JsonNode rootNode = objectMapper.readTree(body);
-            int totalCount = rootNode.path("I2790").path("total_count").asInt();
+        JsonNode rootNode = objectMapper.readTree(body);
+        int totalCount = rootNode.path("I2790").path("total_count").asInt();
 
-            if (totalCount != 0) {
-                extractFoodData(rootNode, foodList);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (totalCount != 0) {
+            extractFoodData(rootNode, foodList);
         }
+
         return foodList;
     }
 
