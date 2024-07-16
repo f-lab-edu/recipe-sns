@@ -1,5 +1,6 @@
 package com.recipesns.food.repository;
 
+import com.recipesns.food.FoodSearchCond;
 import com.recipesns.food.domain.Food;
 import com.recipesns.food.domain.FoodRepository;
 import org.springframework.jdbc.core.RowMapper;
@@ -9,10 +10,12 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.StringUtils;
 
 import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Map;
 
 @Repository
@@ -40,6 +43,19 @@ public class JdbcFoodRepository implements FoodRepository {
         String sql = "select * from foods where id = :id";
         Map<String, Object> param = Map.of("id", id);
         return template.queryForObject(sql, param, foodRowMapper());
+    }
+
+    @Override
+    public List<Food> findAll(FoodSearchCond cond) {
+        String foodName = cond.getFoodName();
+        SqlParameterSource param = new BeanPropertySqlParameterSource(cond);
+
+        String sql = "select * from foods";
+        if (StringUtils.hasText(foodName)) {
+            sql += " where food_name like concat('%', :foodName, '%')";
+        }
+
+        return template.query(sql, param, foodRowMapper());
     }
 
     @Override
