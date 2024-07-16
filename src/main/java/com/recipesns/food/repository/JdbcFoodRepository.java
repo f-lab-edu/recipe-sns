@@ -4,6 +4,7 @@ import com.recipesns.food.domain.Food;
 import com.recipesns.food.domain.FoodRepository;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
@@ -43,6 +44,23 @@ public class JdbcFoodRepository implements FoodRepository {
 
     @Override
     public void update(Food food) {
+        String sql = "update foods set " +
+                "food_name=:foodName, " +
+                "food_size=:foodSize, " +
+                "carbohydrate=:carbohydrate, " +
+                "protein=:protein, " +
+                "fat=:fat, " +
+                "calorie=:calorie " +
+                "where food_code=:foodCode";
+        MapSqlParameterSource param = new MapSqlParameterSource()
+                .addValue("foodName", food.getFoodName())
+                .addValue("foodSize", food.getFoodSize())
+                .addValue("carbohydrate", food.getCarbohydrate())
+                .addValue("protein", food.getProtein())
+                .addValue("fat", food.getFat())
+                .addValue("calorie", food.getCalorie())
+                .addValue("foodCode", food.getFoodCode());
+        template.update(sql, param);
     }
 
     private RowMapper<Food> foodRowMapper() {
