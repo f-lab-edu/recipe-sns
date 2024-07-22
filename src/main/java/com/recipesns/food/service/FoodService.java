@@ -7,6 +7,7 @@ import com.recipesns.food.repository.JdbcFoodRepository;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -17,6 +18,7 @@ public class FoodService {
     private final JdbcFoodRepository foodRepository;
     private final FoodProvider foodProvider;
 
+    @Transactional
     public void updateFood(String today) throws JsonProcessingException {
         List<Food> foodList = foodProvider.getFoods(today);
         for (Food food : foodList) {
