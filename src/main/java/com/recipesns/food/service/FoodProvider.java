@@ -7,17 +7,16 @@ import com.recipesns.food.domain.Food;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
 public class FoodProvider {
+    private static final ObjectMapper objectMapper = new ObjectMapper();
+
     public List<Food> getFoods(String today) throws JsonProcessingException {
 
         String body = getBody(today);
-        System.out.println(body);
-        ObjectMapper objectMapper = new ObjectMapper();
         List<Food> foodList = new ArrayList<>();
 
         JsonNode rootNode = objectMapper.readTree(body);
