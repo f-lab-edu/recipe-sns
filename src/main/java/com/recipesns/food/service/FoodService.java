@@ -1,9 +1,8 @@
 package com.recipesns.food.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.recipesns.food.FoodSearchCond;
 import com.recipesns.food.domain.Food;
-import com.recipesns.food.repository.JdbcFoodRepository;
+import com.recipesns.food.domain.FoodRepository;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
@@ -15,11 +14,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class FoodService {
 
-    private final JdbcFoodRepository foodRepository;
+    private final FoodRepository foodRepository;
     private final FoodProvider foodProvider;
 
     @Transactional
-    public void updateFood(String today) throws JsonProcessingException {
+    public void updateFood(String today) {
         List<Food> foodList = foodProvider.getFoods(today);
         for (Food food : foodList) {
             foodRepository.update(food);
