@@ -14,7 +14,7 @@ public class FoodController {
     private final FoodService foodService;
 
     @GetMapping("/foods")
-    public List<Food> getAll(@RequestParam String foodName) {
-        return foodService.getFoods(new FoodSearchCond(foodName));
+    public List<Food> getAll(@RequestParam String foodName, @RequestParam Integer page, @RequestParam Integer size) {
+        return foodService.getFoods(new FoodSearchCond(foodName, page, size));
     }
 }

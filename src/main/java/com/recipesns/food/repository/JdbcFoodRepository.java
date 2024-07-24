@@ -49,12 +49,21 @@ public class JdbcFoodRepository implements FoodRepository {
     @Override
     public List<Food> findAll(FoodSearchCond cond) {
         String foodName = cond.getFoodName();
-        SqlParameterSource param = new BeanPropertySqlParameterSource(cond);
+        Integer page = cond.getPage();
+        Integer size = cond.getSize();
+        Integer offset = (page - 1) * size;
 
         String sql = "select * from foods";
         if (StringUtils.hasText(foodName)) {
             sql += " where food_name like concat('%', :foodName, '%')";
         }
+        sql += " LIMIT :size OFFSET :offset";
+
+        SqlParameterSource param = new MapSqlParameterSource()
+                .addValue("foodName", foodName)
+                .addValue("size", size)
+                .addValue("offset", offset);
+
 
         return template.query(sql, param, foodRowMapper());
     }
