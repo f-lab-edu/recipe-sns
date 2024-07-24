@@ -27,3 +27,8 @@ spring:
     init:
       mode: always
       schema-locations: classpath:schema.sql
+
+logging:
+  level:
+    org.springframework.jdbc.core: DEBUG
+    org.springframework.jdbc.support: DEBUG
