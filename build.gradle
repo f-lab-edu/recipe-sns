@@ -34,7 +34,7 @@ dependencies {
 	// MySql
 	runtimeOnly 'com.mysql:mysql-connector-j'
     // 테스트시 임베디드 H2 DB
-	testImplementation 'com.h2database:h2'
+	runtimeOnly 'com.h2database:h2'
 }
 
 tasks.named('test') {
