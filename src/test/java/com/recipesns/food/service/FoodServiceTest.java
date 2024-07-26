@@ -3,7 +3,7 @@ package com.recipesns.food.service;
 import com.recipesns.food.controller.dto.FoodSearchRequestDto;
 import com.recipesns.food.domain.Food;
 import com.recipesns.food.domain.FoodRepository;
-import com.recipesns.food.provider.FoodProviderStub;
+import com.recipesns.food.stub.FoodProviderStub;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

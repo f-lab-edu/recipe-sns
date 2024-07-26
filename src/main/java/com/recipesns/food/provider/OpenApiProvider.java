@@ -1,64 +1,33 @@
 package com.recipesns.food.provider;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.recipesns.food.domain.Food;
+import com.recipesns.food.provider.responce.FoodData;
+import com.recipesns.food.provider.responce.OpenApiResponse;
 import com.recipesns.food.service.FoodProvider;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
 
-import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Component
 public class OpenApiProvider implements FoodProvider {
-    private static final ObjectMapper objectMapper = new ObjectMapper();
 
-    public List<Food> getFoods(String today)  {
+    private static final String OPEN_API_URL = "http://openapi.foodsafetykorea.go.kr/api/06f5ad4e4ad84a83bad3/I2790/json/1/1000/CHNG_DT={today}";
 
-        String body = getBody(today);
-        List<Food> foodList = new ArrayList<>();
+    private final RestClient restClient = RestClient.create();
 
-        JsonNode rootNode = null;
-        try {
-            rootNode = objectMapper.readTree(body);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
-        int totalCount = rootNode.path("I2790").path("total_count").asInt();
+    public List<FoodData> getFoods(String today)  {
 
-        if (totalCount != 0) {
-            extractFoodData(rootNode, foodList);
-        }
+        OpenApiResponse response = getResponse(today);
 
-        return foodList;
+        return response.getRoot().getFoodList();
     }
 
-    private void extractFoodData(JsonNode rootNode, List<Food> foodList) {
-        JsonNode rows = rootNode.path("I2790").path("row");
-
-        for (JsonNode row : rows) {
-            String foodName = row.path("DESC_KOR").asText();
-            int foodSize = row.path("SERVING_SIZE").asInt();
-            String foodCode = row.path("FOOD_CD").asText();
-            double carbohydrate = row.path("NUTR_CONT2").asDouble(0.0);
-            double protein = row.path("NUTR_CONT3").asDouble(0.0);
-            double calorie = row.path("NUTR_CONT1").asDouble(0.0);
-            double fat = row.path("NUTR_CONT4").asDouble(0.0);
-
-            Food food = new Food(foodName, foodSize, foodCode, carbohydrate, protein, fat, calorie);
-            foodList.add(food);
-        }
-    }
-
-    private String getBody(String today) {
-        RestClient restClient = RestClient.create();
-
+    private OpenApiResponse getResponse(String today) {
         return restClient.get()
-                .uri("http://openapi.foodsafetykorea.go.kr/api/06f5ad4e4ad84a83bad3/I2790/json/1/1000/CHNG_DT=" + today)
+                .uri(OPEN_API_URL, today)
                 .retrieve()
-                .body(String.class);
+                .body(OpenApiResponse.class);
     }
 }

@@ -1,8 +1,9 @@
 package com.recipesns.food.service;
 
-import com.recipesns.food.domain.Food;
+import com.recipesns.food.provider.responce.FoodData;
+
 import java.util.List;
 
 public interface FoodProvider {
-    List<Food> getFoods(String today);
+    List<FoodData> getFoods(String today);
 }

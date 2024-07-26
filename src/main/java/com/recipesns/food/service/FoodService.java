@@ -3,6 +3,7 @@ package com.recipesns.food.service;
 import com.recipesns.food.controller.dto.FoodSearchRequestDto;
 import com.recipesns.food.domain.Food;
 import com.recipesns.food.domain.FoodRepository;
+import com.recipesns.food.provider.responce.FoodData;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
@@ -20,9 +21,17 @@ public class FoodService {
     @Transactional
     public Integer updateFood(String today) {
         Integer updateCount = 0;
-        List<Food> foodList = foodProvider.getFoods(today);
-        for (Food food : foodList) {
-            foodRepository.update(food);
+        List<FoodData> foodList = foodProvider.getFoods(today);
+        for (FoodData food : foodList) {
+            foodRepository.update(new Food(
+                    food.getFoodName(),
+                    food.getFoodSize(),
+                    food.getFoodCode(),
+                    food.getCarbohydrate(),
+                    food.getProtein(),
+                    food.getFat(),
+                    food.getCalorie()
+                    ));
             updateCount++;
         }
         return updateCount;
