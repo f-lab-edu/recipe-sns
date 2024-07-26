@@ -1,6 +1,6 @@
 package com.recipesns.food.service;
 
-import com.recipesns.food.FoodSearchCond;
+import com.recipesns.food.controller.dto.FoodSearchRequestDto;
 import com.recipesns.food.domain.Food;
 import com.recipesns.food.domain.FoodRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +25,7 @@ public class FoodService {
         }
     }
 
-    public List<Food> getFoods(FoodSearchCond cond) {
-        return foodRepository.findAll(cond);
+    public List<Food> getFoods(FoodSearchRequestDto dto) {
+        return foodRepository.findAll(dto);
     }
 }

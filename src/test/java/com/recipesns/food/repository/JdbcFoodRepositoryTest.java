@@ -1,6 +1,6 @@
 package com.recipesns.food.repository;
 
-import com.recipesns.food.FoodSearchCond;
+import com.recipesns.food.controller.dto.FoodSearchRequestDto;
 import com.recipesns.food.domain.Food;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,10 +64,10 @@ class JdbcFoodRepositoryTest {
         this.jdbcFoodRepository.save(food2);
         this.jdbcFoodRepository.save(food3);
 
-        List<Food> foodList1 = this.jdbcFoodRepository.findAll(new FoodSearchCond(null, 1, 10));
+        List<Food> foodList1 = this.jdbcFoodRepository.findAll(new FoodSearchRequestDto(null, 1, 10));
         assertThat(foodList1.size()).isEqualTo(3);
 
-        List<Food> foodList2 = this.jdbcFoodRepository.findAll(new FoodSearchCond("이름1", 1, 1));
+        List<Food> foodList2 = this.jdbcFoodRepository.findAll(new FoodSearchRequestDto("이름1", 1, 1));
         assertThat(foodList2.size()).isEqualTo(1);
     }
 }

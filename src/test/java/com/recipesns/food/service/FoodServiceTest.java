@@ -1,6 +1,6 @@
 package com.recipesns.food.service;
 
-import com.recipesns.food.FoodSearchCond;
+import com.recipesns.food.controller.dto.FoodSearchRequestDto;
 import com.recipesns.food.domain.Food;
 import com.recipesns.food.domain.FoodRepository;
 import com.recipesns.food.provider.FoodProviderStub;
@@ -65,8 +65,8 @@ class FoodServiceTest {
         repository.save(food2);
         repository.save(food3);
         repository.save(food4);
-        FoodSearchCond cond = new FoodSearchCond("닭가슴살", 1, 2);
-        List<Food> foods = foodService.getFoods(cond);
+        FoodSearchRequestDto dto = new FoodSearchRequestDto("닭가슴살", 1, 2);
+        List<Food> foods = foodService.getFoods(dto);
         assertThat(foods.size()).isEqualTo(2);
 
     }

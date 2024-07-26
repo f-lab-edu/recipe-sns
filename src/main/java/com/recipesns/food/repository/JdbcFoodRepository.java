@@ -1,6 +1,6 @@
 package com.recipesns.food.repository;
 
-import com.recipesns.food.FoodSearchCond;
+import com.recipesns.food.controller.dto.FoodSearchRequestDto;
 import com.recipesns.food.domain.Food;
 import com.recipesns.food.domain.FoodRepository;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +28,7 @@ public class JdbcFoodRepository implements FoodRepository {
     }
 
     @Override
-    public List<Food> findAll(FoodSearchCond cond) {
+    public List<Food> findAll(FoodSearchRequestDto cond) {
         String foodName = cond.getFoodName();
         Integer page = cond.getPage();
         Integer size = cond.getSize();
