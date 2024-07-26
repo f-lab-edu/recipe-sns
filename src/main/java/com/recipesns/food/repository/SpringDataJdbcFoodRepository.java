@@ -6,7 +6,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-public interface SpringDataJdbcRepository extends CrudRepository<Food, Long> {
+public interface SpringDataJdbcFoodRepository extends CrudRepository<Food, Long> {
     Food findByFoodCode(String foodCode);
     List<Food> findAll(Pageable pageable);
     List<Food> findByFoodNameContaining(String foodName, Pageable pageable);

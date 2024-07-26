@@ -1,14 +1,12 @@
 package com.recipesns.food.domain;
 
 import lombok.Getter;
-import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.LocalDateTime;
 
 @Getter
-@Setter
 @Table("FOODS")
 public class Food {
     @Id
@@ -35,18 +33,13 @@ public class Food {
         this.createdAt = LocalDateTime.now();
     }
 
-    @Override
-    public String toString() {
-        return "Food{" +
-                "id=" + id +
-                ", foodName='" + foodName + '\'' +
-                ", foodSize=" + foodSize +
-                ", carbohydrate=" + carbohydrate +
-                ", protein=" + protein +
-                ", calorie=" + calorie +
-                ", fat=" + fat +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
-                '}';
+    public void updateFood(Food food) {
+        this.foodName = food.getFoodName();
+        this.foodSize = food.getFoodSize();
+        this.foodCode = food.getFoodCode();
+        this.carbohydrate = food.getCarbohydrate();
+        this.protein = food.getProtein();
+        this.calorie = food.getCalorie();
+        this.updatedAt = LocalDateTime.now();
     }
 }

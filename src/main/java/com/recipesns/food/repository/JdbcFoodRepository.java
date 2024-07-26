@@ -8,14 +8,13 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
 public class JdbcFoodRepository implements FoodRepository {
 
-    private final SpringDataJdbcRepository repository;
+    private final SpringDataJdbcFoodRepository repository;
 
     @Override
     public Food save(Food food) {
@@ -44,13 +43,7 @@ public class JdbcFoodRepository implements FoodRepository {
     @Override
     public void update(Food food) {
         Food findFood = repository.findByFoodCode(food.getFoodCode());
-        findFood.setFoodName(food.getFoodName());
-        findFood.setFoodSize(food.getFoodSize());
-        findFood.setCarbohydrate(food.getCarbohydrate());
-        findFood.setProtein(food.getProtein());
-        findFood.setFat(food.getFat());
-        findFood.setCalorie(food.getCalorie());
-        findFood.setUpdatedAt(LocalDateTime.now());
+        findFood.updateFood(food);
         repository.save(findFood);
     }
 }
