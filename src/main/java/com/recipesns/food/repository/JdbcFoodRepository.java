@@ -33,11 +33,11 @@ public class JdbcFoodRepository implements FoodRepository {
         Integer page = cond.getPage();
         Integer size = cond.getSize();
         PageRequest pageable = PageRequest.of(page - 1, size);
+
         if (StringUtils.hasText(foodName)) {
-            System.out.println("이름 있을때");
             return repository.findByFoodNameContaining(foodName, pageable);
         }
-        System.out.println("이름 없을때");
+
         return repository.findAll(pageable);
     }
 
