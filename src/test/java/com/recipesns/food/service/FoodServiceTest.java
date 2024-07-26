@@ -41,7 +41,7 @@ class FoodServiceTest {
         Food savedFood2 = repository.save(food2);
         Food savedFood3 = repository.save(food3);
 
-        foodService.updateFood(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")));
+        Integer updateCount = foodService.updateFood(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")));
 
         Food findFood1 = repository.findById(savedFood1.getId());
         Food findFood2 = repository.findById(savedFood2.getId());
@@ -50,6 +50,7 @@ class FoodServiceTest {
         assertThat(findFood1.getFoodSize()).isEqualTo(141);
         assertThat(findFood2.getFoodSize()).isEqualTo(142);
         assertThat(findFood3.getFoodSize()).isEqualTo(143);
+        assertThat(updateCount).isEqualTo(3);
     }
 
     @Test

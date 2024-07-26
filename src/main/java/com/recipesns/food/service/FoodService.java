@@ -18,11 +18,14 @@ public class FoodService {
     private final FoodProvider foodProvider;
 
     @Transactional
-    public void updateFood(String today) {
+    public Integer updateFood(String today) {
+        Integer updateCount = 0;
         List<Food> foodList = foodProvider.getFoods(today);
         for (Food food : foodList) {
             foodRepository.update(food);
+            updateCount++;
         }
+        return updateCount;
     }
 
     public List<Food> getFoods(FoodSearchRequestDto dto) {
