@@ -6,33 +6,29 @@ import com.recipesns.food.domain.FoodRepository;
 import com.recipesns.food.provider.responce.FoodData;
 import lombok.RequiredArgsConstructor;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class FoodService {
 
+    private final FoodUpdateService foodUpdateService;
     private final FoodRepository foodRepository;
     private final FoodProvider foodProvider;
 
-    @Transactional
     public Integer updateFood(String today) {
-        Integer updateCount = 0;
-        List<FoodData> foodList = foodProvider.getFoods(today);
-        for (FoodData food : foodList) {
-            foodRepository.update(new Food(
-                    food.getFoodName(),
-                    food.getFoodSize(),
-                    food.getFoodCode(),
-                    food.getCarbohydrate(),
-                    food.getProtein(),
-                    food.getFat(),
-                    food.getCalorie()
-                    ));
-            updateCount++;
+        Integer updateCount = 300;
+        Integer startPage = 1;
+        Integer endPage = 300;
+        while (updateCount % 300 == 0) {
+            List<FoodData> foodList = foodProvider.getFoods(today, startPage, endPage);
+            updateCount = foodUpdateService.update(foodList);
+            startPage = startPage + updateCount;
+            endPage = endPage + updateCount;
         }
         return updateCount;
     }

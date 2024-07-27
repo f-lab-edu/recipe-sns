@@ -24,11 +24,14 @@ class FoodServiceTest {
     @Autowired
     FoodRepository repository;
 
+    @Autowired
+    FoodUpdateService foodUpdateService;
+
     FoodService foodService;
 
     @BeforeEach
     void beforeEach() {
-        foodService = new FoodService(repository, new FoodProviderStub());
+        foodService = new FoodService(foodUpdateService, repository, new FoodProviderStub());
     }
 
     @Test

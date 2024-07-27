@@ -13,20 +13,20 @@ import java.util.List;
 @Component
 public class OpenApiProvider implements FoodProvider {
 
-    private static final String OPEN_API_URL = "http://openapi.foodsafetykorea.go.kr/api/06f5ad4e4ad84a83bad3/I2790/json/1/1000/CHNG_DT={today}";
+    private static final String OPEN_API_URL = "http://openapi.foodsafetykorea.go.kr/api/06f5ad4e4ad84a83bad3/I2790/json/{startPage}/{endPage}/CHNG_DT={today}";
 
     private final RestClient restClient = RestClient.create();
 
-    public List<FoodData> getFoods(String today)  {
+    public List<FoodData> getFoods(String today, Integer startPage, Integer endPage)  {
 
-        OpenApiResponse response = getResponse(today);
+        OpenApiResponse response = getResponse(today, startPage, endPage);
 
         return response.getRoot().getFoodList();
     }
 
-    private OpenApiResponse getResponse(String today) {
+    private OpenApiResponse getResponse(String today,Integer startPage, Integer endPage) {
         return restClient.get()
-                .uri(OPEN_API_URL, today)
+                .uri(OPEN_API_URL, startPage, endPage, today)
                 .retrieve()
                 .body(OpenApiResponse.class);
     }
