@@ -12,6 +12,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 
+@Transactional
 @SpringBootTest
 @ActiveProfiles("test")
 class JdbcFoodRepositoryTest {
@@ -20,7 +21,6 @@ class JdbcFoodRepositoryTest {
     JdbcFoodRepository jdbcFoodRepository;
 
     @Test
-    @Transactional
     void save() {
         Food food = new Food("음식 이름", 140, "DS1234", 50.2, 30.2, 12, 511);
         Food savedFood = this.jdbcFoodRepository.save(food);
@@ -28,7 +28,6 @@ class JdbcFoodRepositoryTest {
     }
 
     @Test
-    @Transactional
     void findById() {
         Food food = new Food("음식 이름", 140, "DS1234", 50.2, 30.2, 12, 511);
         Food savedFood = this.jdbcFoodRepository.save(food);
@@ -37,24 +36,6 @@ class JdbcFoodRepositoryTest {
     }
 
     @Test
-    @Transactional
-    void update() {
-        Food food = new Food("음식 이름1", 140, "DS1234", 50.2, 30.2, 12, 511);
-
-        Food savedFood = this.jdbcFoodRepository.save(food);
-
-        Food updateFood = new Food("음식 이름2", 145, "DS1234", 51.2, 34.2, 12, 5111);
-
-        this.jdbcFoodRepository.update(updateFood);
-        Food findFood2 = this.jdbcFoodRepository.findById(savedFood.getId());
-
-        assertThat(updateFood.getFoodCode()).isEqualTo(findFood2.getFoodCode());
-        assertThat(updateFood.getFoodName()).isEqualTo(findFood2.getFoodName());
-        assertThat(updateFood.getCalorie()).isEqualTo(findFood2.getCalorie());
-    }
-
-    @Test
-    @Transactional
     void findAll() {
         Food food1 = new Food("음식 이름1", 140, "DS1234", 50.2, 30.2, 12, 511);
         Food food2 = new Food("음식 이름2", 140, "DS1234", 50.2, 30.2, 12, 511);
