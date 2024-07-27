@@ -49,7 +49,7 @@ public class JdbcFoodRepository implements FoodRepository {
 
     @Override
     public Integer bulkUpdate(List<FoodData> foodList) {
-        String sql = "UPDATE foods SET food_name = ?, food_size = ?, carbohydrate = ?, protein = ?, calorie = ?, fat = ? WHERE food_code = ?";
+        String sql = "UPDATE food SET food_name = ?, food_size = ?, carbohydrate = ?, protein = ?, calorie = ?, fat = ? WHERE food_code = ?";
 
         List<Object[]> batch = foodList.stream()
                 .map(food -> new Object[]{food.getFoodName(), food.getFoodSize(), food.getCarbohydrate(), food.getProtein(), food.getCalorie(), food.getFat(), food.getFoodCode()})

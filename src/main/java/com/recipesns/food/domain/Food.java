@@ -2,12 +2,10 @@ package com.recipesns.food.domain;
 
 import lombok.Getter;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.LocalDateTime;
 
 @Getter
-@Table("FOODS")
 public class Food {
     @Id
     private Long id;
@@ -16,7 +14,6 @@ public class Food {
     private String foodCode;
     private double carbohydrate;
     private double protein;
-
     private double calorie;
     private double fat;
     private LocalDateTime createdAt;
