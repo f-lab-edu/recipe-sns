@@ -3,18 +3,25 @@ package com.recipesns.food.repository;
 import com.recipesns.food.controller.dto.FoodSearchRequestDto;
 import com.recipesns.food.domain.Food;
 import com.recipesns.food.domain.FoodRepository;
-import lombok.RequiredArgsConstructor;
+import com.recipesns.food.provider.responce.FoodData;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
+import javax.sql.DataSource;
 import java.util.List;
 
 @Repository
-@RequiredArgsConstructor
 public class JdbcFoodRepository implements FoodRepository {
 
     private final SpringDataJdbcFoodRepository repository;
+    private final JdbcTemplate jdbcTemplate;
+
+    public JdbcFoodRepository(SpringDataJdbcFoodRepository repository, DataSource dataSource) {
+        this.repository = repository;
+        this.jdbcTemplate = new JdbcTemplate(dataSource);
+    }
 
     @Override
     public Food save(Food food) {
@@ -41,9 +48,13 @@ public class JdbcFoodRepository implements FoodRepository {
     }
 
     @Override
-    public void update(Food food) {
-        Food findFood = repository.findByFoodCode(food.getFoodCode());
-        findFood.updateFood(food);
-        repository.save(findFood);
+    public Integer bulkUpdate(List<FoodData> foodList) {
+        String sql = "UPDATE foods SET food_name = ?, food_size = ?, carbohydrate = ?, protein = ?, calorie = ?, fat = ? WHERE food_code = ?";
+
+        List<Object[]> batch = foodList.stream()
+                .map(food -> new Object[]{food.getFoodName(), food.getFoodSize(), food.getCarbohydrate(), food.getProtein(), food.getCalorie(), food.getFat(), food.getFoodCode()})
+                .toList();
+        jdbcTemplate.batchUpdate(sql, batch);
+        return foodList.size();
     }
 }
