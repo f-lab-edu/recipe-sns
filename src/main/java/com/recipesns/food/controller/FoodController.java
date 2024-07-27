@@ -17,7 +17,6 @@ public class FoodController {
 
     @GetMapping("/foods")
     public List<Food> getAll(@ModelAttribute FoodSearchRequestDto dto) {
-        log.info("dto={}", dto);
         return foodService.getFoods(dto);
     }
 }
