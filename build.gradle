@@ -31,8 +31,11 @@ dependencies {
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	// JDBC
 	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
 	// MySql
 	runtimeOnly 'com.mysql:mysql-connector-j'
+    // 테스트시 임베디드 H2 DB
+	runtimeOnly 'com.h2database:h2'
 }
 
 tasks.named('test') {

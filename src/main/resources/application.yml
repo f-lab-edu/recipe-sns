@@ -1,8 +1,34 @@
 spring:
-  application:
-    name: recipe-sns
+  profiles:
+    default: local
   datasource:
     url: jdbc:mysql://localhost:3306/recipe_sns
     username: root
     password: hp12081208
     driver-class-name: com.mysql.cj.jdbc.Driver
+
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+
+---
+spring:
+  config:
+    activate:
+      on-profile: test
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:~/test;MODE=MYSQL;
+    username: sa
+    password:
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:schema.sql
+
+logging:
+  level:
+    org.springframework.jdbc.core: DEBUG
+    org.springframework.jdbc.support: DEBUG
