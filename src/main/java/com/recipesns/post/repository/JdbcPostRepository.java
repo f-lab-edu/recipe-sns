@@ -5,6 +5,8 @@ import com.recipesns.post.domain.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 @RequiredArgsConstructor
 public class JdbcPostRepository implements PostRepository {
@@ -14,5 +16,10 @@ public class JdbcPostRepository implements PostRepository {
     @Override
     public Post save(Post post) {
         return repository.save(post);
+    }
+
+    @Override
+    public Optional<Post> findById(Long id) {
+        return repository.findById(id);
     }
 }
