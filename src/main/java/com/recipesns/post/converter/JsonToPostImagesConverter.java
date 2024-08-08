@@ -3,14 +3,16 @@ package com.recipesns.post.converter;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.recipesns.post.domain.PostImages;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.convert.ReadingConverter;
 
 @Slf4j
 @ReadingConverter
+@RequiredArgsConstructor
 public class JsonToPostImagesConverter implements Converter<String, PostImages> {
-    ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper;
 
     @Override
     public PostImages convert(String source) {
