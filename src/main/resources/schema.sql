@@ -1,5 +1,5 @@
-drop table if exists food CASCADE;
-create table food (
+drop table if exists FOOD CASCADE;
+create table FOOD (
     id bigint auto_increment primary key,
     food_name varchar(255) not null,
     food_code varchar(255) not null,
