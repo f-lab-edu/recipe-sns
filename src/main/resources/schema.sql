@@ -36,6 +36,15 @@ create table POST (
     foreign key (member_id) references MEMBER(id)
 );
 
+create table POST_FOOD (
+    id bigint auto_increment primary key,
+    post_id bigint not null,
+    food_id bigint not null,
+    created_at timestamp not null,
+    foreign key (post_id) references POST(id),
+    foreign key (food_id) references FOOD(id)
+);
+
 create table POST_LIKE (
     id bigint auto_increment primary key,
     member_id bigint not null,

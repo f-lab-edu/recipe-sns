@@ -1,6 +1,7 @@
 package com.recipesns.post.repository;
 
 import com.recipesns.post.domain.Post;
+import com.recipesns.post.domain.PostFood;
 import com.recipesns.post.domain.PostImage;
 import com.recipesns.post.domain.PostImages;
 import org.junit.jupiter.api.Test;
@@ -11,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -25,7 +27,7 @@ class JdbcPostRepositoryTest {
     void save() {
         List<PostImage> images = List.of(new PostImage("/res/post/post1.jpg", "post1.jpg"), new PostImage("/res/post/post2.jpg", "post2.jpg"));
         PostImages postImages = new PostImages(images);
-        Post post = new Post(1L,"게시물 내용", postImages);
+        Post post = new Post(1L,"게시물 내용", postImages, Set.of(new PostFood(1L)));
         Post savedPost = jdbcPostRepository.save(post);
         assertThat(post).isEqualTo(savedPost);
     }
@@ -34,7 +36,7 @@ class JdbcPostRepositoryTest {
     void findById() {
         List<PostImage> images = List.of(new PostImage("/res/post/post1.jpg", "post1.jpg"), new PostImage("/res/post/post2.jpg", "post2.jpg"));
         PostImages postImages = new PostImages(images);
-        Post post = new Post(1L,"게시물 내용", postImages);
+        Post post = new Post(1L,"게시물 내용", postImages, Set.of(new PostFood(1L)));
         Post savedPost = jdbcPostRepository.save(post);
         Optional<Post> findPost = jdbcPostRepository.findById(savedPost.getId());
         assertThat(savedPost.getId()).isEqualTo(findPost.get().getId());

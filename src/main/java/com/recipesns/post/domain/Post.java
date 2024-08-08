@@ -1,11 +1,15 @@
 package com.recipesns.post.domain;
 
+import lombok.Builder;
 import lombok.Getter;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Column;
+import org.springframework.data.relational.core.mapping.MappedCollection;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.Set;
 
 @Table("POST")
 @Getter
@@ -16,15 +20,26 @@ public class Post {
     private Long memberId;
     private String content;
     private PostImages images;
+
+    @MappedCollection(idColumn = "POST_ID")
+    private Set<PostFood> foods;
+
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public Post(Long memberId, String content, PostImages images) {
+    @Builder
+    public Post(Long memberId, String content, PostImages images, Set<PostFood> foods) {
         this.memberId = memberId;
         this.images = images;
         this.content = content;
+        this.foods = foods;
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
+    }
+
+    // 테스트용
+    public void setId(Long id) {
+        this.id = id;
     }
 
     @Override

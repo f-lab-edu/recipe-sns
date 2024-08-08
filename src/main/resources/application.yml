@@ -12,6 +12,10 @@ spring:
   config:
     activate:
       on-profile: local
+logging:
+  level:
+    org.springframework.jdbc.core: DEBUG
+    org.springframework.jdbc.support: DEBUG
 
 ---
 spring:
