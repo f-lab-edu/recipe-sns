@@ -5,14 +5,14 @@ import com.recipesns.post.domain.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
-//@Repository
+@Repository
 @RequiredArgsConstructor
-public class JdbcPostRepository {
+public class JdbcPostRepository implements PostRepository {
 
-//    private final SpringDataJdbcPostRepository repository;
+    private final SpringDataJdbcPostRepository repository;
 
-//    @Override
-//    public Post save(Post post) {
-//        return repository.save(post);
-//    }
+    @Override
+    public Post save(Post post) {
+        return repository.save(post);
+    }
 }

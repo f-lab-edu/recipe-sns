@@ -1,0 +1,1 @@
+INSERT INTO MEMBER (username, password, nickname, created_at, updated_at, withdrawal_at) VALUES ('john_doe', 'password123', 'John', CURRENT_TIMESTAMP, NULL, NULL);
