@@ -12,6 +12,10 @@ spring:
   config:
     activate:
       on-profile: local
+logging:
+  level:
+    org.springframework.jdbc.core: DEBUG
+    org.springframework.jdbc.support: DEBUG
 
 ---
 spring:
@@ -27,6 +31,7 @@ spring:
     init:
       mode: always
       schema-locations: classpath:schema.sql
+      data-locations: classpath:data.sql
 
 logging:
   level:
