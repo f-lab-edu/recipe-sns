@@ -3,7 +3,6 @@ package com.recipesns.post.domain;
 import lombok.Builder;
 import lombok.Getter;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.MappedCollection;
 import org.springframework.data.relational.core.mapping.Table;
 
@@ -18,9 +17,9 @@ public class Post {
     @Id
     private Long id;
     private Long memberId;
+    private Long likeCount;
     private String content;
     private PostImages images;
-
     @MappedCollection(idColumn = "POST_ID")
     private Set<PostFood> foods;
 
@@ -28,13 +27,22 @@ public class Post {
     private LocalDateTime updatedAt;
 
     @Builder
-    public Post(Long memberId, String content, PostImages images, Set<PostFood> foods) {
+    public Post(Long memberId, Long likeCount, String content, PostImages images, Set<PostFood> foods) {
         this.memberId = memberId;
+        this.likeCount = likeCount;
         this.images = images;
         this.content = content;
         this.foods = foods;
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
+    }
+
+    public void increaseLikeCount() {
+        this.likeCount = this.likeCount + 1;
+    }
+
+    public void decreaseLikeCount() {
+        this.likeCount = this.likeCount - 1;
     }
 
     // 테스트용

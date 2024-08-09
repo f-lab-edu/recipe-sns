@@ -1,7 +1,7 @@
 package com.recipesns.post.stub;
 
 import com.recipesns.post.domain.Post;
-import com.recipesns.post.domain.PostRepository;
+import com.recipesns.post.domain.repository.PostRepository;
 
 import java.util.HashMap;
 import java.util.Map;

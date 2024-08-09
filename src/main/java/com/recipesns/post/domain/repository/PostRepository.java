@@ -1,4 +1,6 @@
-package com.recipesns.post.domain;
+package com.recipesns.post.domain.repository;
+
+import com.recipesns.post.domain.Post;
 
 import java.util.Optional;
 

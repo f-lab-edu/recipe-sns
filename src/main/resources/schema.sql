@@ -29,6 +29,7 @@ create table MEMBER (
 create table POST (
     id bigint auto_increment primary key,
     member_id bigint not null,
+    like_count bigint not null,
     content varchar(255) not null,
     images json not null,
     created_at timestamp not null,
