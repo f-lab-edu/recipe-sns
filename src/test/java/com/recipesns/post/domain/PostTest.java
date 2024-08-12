@@ -12,8 +12,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PostTest {
 
-    private List<PostImage> images = List.of(new PostImage("/res/post/post1.jpg", "post1.jpg"), new PostImage("/res/post/post2.jpg", "post2.jpg"));;
-    private PostImages postImages = new PostImages(images);;
+    private List<PostImage> images = List.of(new PostImage("/res/post/post1.jpg", "post1.jpg"), new PostImage("/res/post/post2.jpg", "post2.jpg"));
+    private PostImages postImages = new PostImages(images);
 
     @Test
     @DisplayName("게시물의 likeCount가 1씩 증가한다")
