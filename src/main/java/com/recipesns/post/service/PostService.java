@@ -3,6 +3,7 @@ package com.recipesns.post.service;
 import com.recipesns.post.controller.dto.PostCreateRequestDto;
 import com.recipesns.post.domain.*;
 import com.recipesns.post.domain.repository.PostRepository;
+import com.recipesns.post.exception.PostNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,7 +26,7 @@ public class PostService {
         postLikeService.likePost(postId, memberId);
 
         Post post = postRepository.findById(postId)
-                .orElseThrow(() -> new RuntimeException("게시물을 찾을 수 없습니다"));
+                .orElseThrow(() -> new PostNotFoundException("게시물을 찾을 수 없습니다"));
 
         post.increaseLikeCount();
 
@@ -37,7 +38,7 @@ public class PostService {
         postLikeService.unLikePost(postId, memberId);
 
         Post post = postRepository.findById(postId)
-                .orElseThrow(() -> new RuntimeException("게시물을 찾을 수 없습니다"));
+                .orElseThrow(() -> new PostNotFoundException("게시물을 찾을 수 없습니다"));
 
         post.decreaseLikeCount();
 
