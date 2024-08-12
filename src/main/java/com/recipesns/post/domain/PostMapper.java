@@ -30,7 +30,7 @@ public class PostMapper {
     private static PostImages postImageMapping(List<ImageRequest> images) {
         List<PostImage> postImages = images.stream()
                 .map(image -> new PostImage(image.getFilePath(), image.getFileName()))
-                .collect(Collectors.toList());
+                .toList();
         return new PostImages(postImages);
     }
 }
