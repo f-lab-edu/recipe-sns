@@ -24,7 +24,9 @@ public class PostService {
     public void likePost(Long postId, Long memberId) {
         postLikeService.likePost(postId, memberId);
 
-        Post post = postRepository.findById(postId).get();
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new RuntimeException("게시물을 찾을 수 없습니다"));
+
         post.increaseLikeCount();
 
         postRepository.save(post);
@@ -34,7 +36,9 @@ public class PostService {
     public void unLikePost(Long postId, Long memberId) {
         postLikeService.unLikePost(postId, memberId);
 
-        Post post = postRepository.findById(postId).get();
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new RuntimeException("게시물을 찾을 수 없습니다"));
+
         post.decreaseLikeCount();
 
         postRepository.save(post);
