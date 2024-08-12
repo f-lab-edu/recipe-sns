@@ -1,4 +1,4 @@
-package com.recipesns.post.exception;
+package com.recipesns.post.service.exception;
 
 public class PostNotFoundException extends RuntimeException {
 

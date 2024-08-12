@@ -3,7 +3,7 @@ package com.recipesns.post.service;
 import com.recipesns.post.controller.dto.PostCreateRequestDto;
 import com.recipesns.post.domain.*;
 import com.recipesns.post.domain.repository.PostRepository;
-import com.recipesns.post.exception.PostNotFoundException;
+import com.recipesns.post.service.exception.PostNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

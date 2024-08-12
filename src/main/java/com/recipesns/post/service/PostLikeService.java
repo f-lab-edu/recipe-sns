@@ -3,8 +3,8 @@ package com.recipesns.post.service;
 import com.recipesns.post.domain.PostLike;
 import com.recipesns.post.domain.PostLikeMapper;
 import com.recipesns.post.domain.repository.PostLikeRepository;
-import com.recipesns.post.exception.DuplicateLikeException;
-import com.recipesns.post.exception.PostLikeNotFoundException;
+import com.recipesns.post.service.exception.DuplicateLikeException;
+import com.recipesns.post.service.exception.PostLikeNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
