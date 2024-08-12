@@ -14,18 +14,17 @@ public class PostLikeService {
     private final PostLikeMapper postLikeMapper;
 
     public void likePost(Long postId, Long memberId) {
-        PostLike postLike = repository.findByPostIdAndMemberId(postId, memberId);
-        if (postLike != null) {
-            throw new IllegalArgumentException("좋아요를 중복으로 할 수 없습니다");
-        }
+
+        repository.findByPostIdAndMemberId(postId, memberId).ifPresent(postLike ->  {
+            throw new IllegalArgumentException("좋아요를 중복으로 할 수 없습니다"); });
+
         repository.save(postLikeMapper.from(postId, memberId));
     }
 
     public void unLikePost(Long postId, Long memberId) {
-        PostLike postLike = repository.findByPostIdAndMemberId(postId, memberId);
-        if (postLike == null) {
-            throw new IllegalArgumentException("좋아요 데이터를 찾을 수 없습니다");
-        }
+        PostLike postLike = repository.findByPostIdAndMemberId(postId, memberId)
+                .orElseThrow(() -> new IllegalArgumentException("좋아요 데이터를 찾을 수 없습니다"));
+
         repository.delete(postLike);
     }
 }

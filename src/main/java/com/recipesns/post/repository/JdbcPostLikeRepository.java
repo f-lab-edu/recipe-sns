@@ -5,6 +5,8 @@ import com.recipesns.post.domain.repository.PostLikeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 @RequiredArgsConstructor
 public class JdbcPostLikeRepository implements PostLikeRepository {
@@ -22,7 +24,7 @@ public class JdbcPostLikeRepository implements PostLikeRepository {
     }
 
     @Override
-    public PostLike findByPostIdAndMemberId(Long postId, Long memberId) {
+    public Optional<PostLike> findByPostIdAndMemberId(Long postId, Long memberId) {
         return repository.findByPostIdAndMemberId(postId, memberId);
     }
 }
