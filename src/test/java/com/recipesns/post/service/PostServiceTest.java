@@ -1,7 +1,7 @@
 package com.recipesns.post.service;
 
-import com.recipesns.post.controller.dto.Food;
-import com.recipesns.post.controller.dto.Image;
+import com.recipesns.post.controller.dto.FoodRequest;
+import com.recipesns.post.controller.dto.ImageRequest;
 import com.recipesns.post.controller.dto.PostCreateRequestDto;
 import com.recipesns.post.domain.Post;
 import com.recipesns.post.domain.PostLikeMapper;
@@ -35,8 +35,8 @@ class PostServiceTest {
         PostCreateRequestDto dto = PostCreateRequestDto.builder()
                 .memberId(1L)
                 .content("게시물 내용")
-                .images(List.of(new Image("asda", "asd")))
-                .foods(List.of(new Food(1L)))
+                .images(List.of(new ImageRequest("asda", "asd")))
+                .foods(List.of(new FoodRequest(1L)))
                 .build();
         Post post = postService.createPost(dto);
         Optional<Post> findPost = postRepository.findById(post.getId());

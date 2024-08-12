@@ -1,7 +1,7 @@
 package com.recipesns.post.domain;
 
-import com.recipesns.post.controller.dto.Food;
-import com.recipesns.post.controller.dto.Image;
+import com.recipesns.post.controller.dto.FoodRequest;
+import com.recipesns.post.controller.dto.ImageRequest;
 import com.recipesns.post.controller.dto.PostCreateRequestDto;
 import org.springframework.stereotype.Component;
 
@@ -21,13 +21,13 @@ public class PostMapper {
                 .build();
     }
 
-    private static Set<PostFood> postFoodMapping(List<Food> foods) {
+    private static Set<PostFood> postFoodMapping(List<FoodRequest> foods) {
         return foods.stream()
                 .map(food -> new PostFood(food.getFoodId()))
                 .collect(Collectors.toSet());
     }
 
-    private static PostImages postImageMapping(List<Image> images) {
+    private static PostImages postImageMapping(List<ImageRequest> images) {
         List<PostImage> postImages = images.stream()
                 .map(image -> new PostImage(image.getFilePath(), image.getFileName()))
                 .collect(Collectors.toList());

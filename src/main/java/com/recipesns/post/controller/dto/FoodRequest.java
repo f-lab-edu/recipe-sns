@@ -3,13 +3,13 @@ package com.recipesns.post.controller.dto;
 import lombok.Getter;
 
 @Getter
-public class Food {
+public class FoodRequest {
     private Long foodId;
 
-    public Food() {
+    public FoodRequest() {
     }
 
-    public Food(Long foodId) {
+    public FoodRequest(Long foodId) {
         this.foodId = foodId;
     }
 }

@@ -9,11 +9,11 @@ import java.util.List;
 public class PostCreateRequestDto {
     private Long memberId;
     private String content;
-    private List<Image> images;
-    private List<Food> foods;
+    private List<ImageRequest> images;
+    private List<FoodRequest> foods;
 
     @Builder
-    public PostCreateRequestDto(Long memberId, String content, List<Image> images, List<Food> foods) {
+    public PostCreateRequestDto(Long memberId, String content, List<ImageRequest> images, List<FoodRequest> foods) {
         this.memberId = memberId;
         this.content = content;
         this.images = images;
