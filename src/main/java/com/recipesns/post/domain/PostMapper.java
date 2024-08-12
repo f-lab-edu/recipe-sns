@@ -17,6 +17,7 @@ public class PostMapper {
                 .content(dto.getContent())
                 .images(postImageMapping(dto.getImages()))
                 .foods(postFoodMapping(dto.getFoods()))
+                .likeCount(0L)
                 .build();
     }
 
