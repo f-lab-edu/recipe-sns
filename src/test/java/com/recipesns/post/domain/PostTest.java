@@ -47,6 +47,6 @@ class PostTest {
         post.decreaseLikeCount();
         post.decreaseLikeCount();
         post.decreaseLikeCount();
-        assertThat(post.getLikeCount()).isEqualTo(0);
+        assertThat(post.getLikeCount()).isZero();
     }
 }
