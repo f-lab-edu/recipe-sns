@@ -1,4 +1,4 @@
-package com.recipesns.config;
+package com.recipesns.common.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.recipesns.domain.post.converter.JsonToPostImagesConverter;

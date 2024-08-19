@@ -1,6 +1,8 @@
 package com.recipesns.domain.post.converter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.recipesns.common.exception.SystemError;
+import com.recipesns.common.exception.SystemException;
 import com.recipesns.domain.post.converter.exception.PostImagesConversionException;
 import com.recipesns.domain.post.PostImages;
 import lombok.RequiredArgsConstructor;
@@ -10,19 +12,21 @@ import org.springframework.data.convert.ReadingConverter;
 
 import java.io.IOException;
 
+import static com.recipesns.common.exception.SystemError.*;
+
 @Slf4j
 @ReadingConverter
 @RequiredArgsConstructor
-public class JsonToPostImagesConverter implements Converter<byte[], PostImages> {
+public class JsonToPostImagesConverter implements Converter<String, PostImages> {
     private final ObjectMapper objectMapper;
 
     @Override
-    public PostImages convert(byte[] source) {
+    public PostImages convert(String source) {
         try {
-            String jsonSource = objectMapper.readValue(source, String.class);
-            return objectMapper.readValue(jsonSource, PostImages.class);
+//            String jsonSource = objectMapper.readValue(source, String.class);
+            return objectMapper.readValue(source, PostImages.class);
         } catch (IOException e) {
-            throw new PostImagesConversionException("JSON 문자열을 이미지 리스트로 변환할 수 없습니다", e);
+            throw new SystemException(JSON_CONVERTER_ERROR.getCode(), JSON_CONVERTER_ERROR.getMessage());
         }
     }
 }

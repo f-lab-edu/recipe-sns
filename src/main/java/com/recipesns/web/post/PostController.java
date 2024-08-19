@@ -1,5 +1,6 @@
 package com.recipesns.web.post;
 
+import com.recipesns.common.response.ApiResponse;
 import com.recipesns.web.post.dto.PostCreateRequestDto;
 import com.recipesns.domain.post.Post;
 import com.recipesns.service.post.PostService;
@@ -16,17 +17,19 @@ public class PostController {
     private final PostService postService;
 
     @PostMapping
-    public Post create(@RequestBody PostCreateRequestDto dto) {
-        return postService.createPost(dto);
+    public ApiResponse<Post> create(@RequestBody PostCreateRequestDto dto) {
+        return ApiResponse.success(postService.createPost(dto));
     }
 
     @PostMapping("/{postId}/like")
-    public void like(@PathVariable Long postId, @RequestParam Long memberId) {
+    public ApiResponse<Void> like(@PathVariable Long postId, @RequestParam Long memberId) {
         postService.likePost(postId, memberId);
+        return ApiResponse.success();
     }
 
     @PostMapping("/{postId}/unlike")
-    public void unLike(@PathVariable Long postId, @RequestParam Long memberId) {
+    public ApiResponse<Void> unLike(@PathVariable Long postId, @RequestParam Long memberId) {
         postService.unLikePost(postId, memberId);
+        return ApiResponse.success();
     }
 }
