@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @Slf4j
 @RestControllerAdvice
-public class ExceptionController {
+public class ExceptionAdvice {
 
     @ExceptionHandler(SystemException.class)
     public ApiResponse<Void> SystemExceptionHandler(SystemException e) {
