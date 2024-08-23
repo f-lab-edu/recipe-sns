@@ -2,9 +2,6 @@ package com.recipesns.domain.post.converter;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.recipesns.common.exception.SystemError;
-import com.recipesns.common.exception.SystemException;
-import com.recipesns.domain.post.converter.exception.JsonConversionException;
 import com.recipesns.domain.post.PostImages;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +21,7 @@ public class PostImagesToJsonConverter implements Converter<PostImages, String> 
         try {
             return objectMapper.writeValueAsString(images);
         } catch (JsonProcessingException e) {
-            throw new SystemException(POST_IMAGE_CONVERTER_ERROR.getCode(), POST_IMAGE_CONVERTER_ERROR.getMessage());
+            throw POST_IMAGE_CONVERTER_ERROR.exception();
         }
     }
 }

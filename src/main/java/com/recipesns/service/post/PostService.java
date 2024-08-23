@@ -1,7 +1,5 @@
 package com.recipesns.service.post;
 
-import com.recipesns.common.exception.BusinessError;
-import com.recipesns.common.exception.BusinessException;
 import com.recipesns.domain.post.Post;
 import com.recipesns.domain.post.PostMapper;
 import com.recipesns.web.post.dto.PostCreateRequestDto;
@@ -9,6 +7,8 @@ import com.recipesns.domain.post.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import static com.recipesns.common.exception.BusinessError.*;
 
 @Service
 @RequiredArgsConstructor
@@ -28,7 +28,7 @@ public class PostService {
         postLikeService.likePost(postId, memberId);
 
         Post post = postRepository.findById(postId)
-                .orElseThrow(() -> new BusinessException(BusinessError.POST_NOT_FOUND_ERROR.getCode(), BusinessError.POST_NOT_FOUND_ERROR.getMessage()));
+                .orElseThrow(POST_NOT_FOUND_ERROR::exception);
 
         post.increaseLikeCount();
 
@@ -40,7 +40,7 @@ public class PostService {
         postLikeService.unLikePost(postId, memberId);
 
         Post post = postRepository.findById(postId)
-                .orElseThrow(() -> new BusinessException(BusinessError.POST_NOT_FOUND_ERROR.getCode(), BusinessError.POST_NOT_FOUND_ERROR.getMessage()));
+                .orElseThrow(POST_NOT_FOUND_ERROR::exception);
 
         post.decreaseLikeCount();
 

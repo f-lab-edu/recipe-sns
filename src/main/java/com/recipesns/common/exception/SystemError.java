@@ -15,4 +15,8 @@ public enum SystemError {
         this.code = code;
         this.message = message;
     }
+
+    public SystemException exception() {
+        return new SystemException(this.code, this.message);
+    }
 }

@@ -16,4 +16,8 @@ public enum BusinessError {
         this.code = code;
         this.message = message;
     }
+
+    public BusinessException exception() {
+        return new BusinessException(this.code, this.message);
+    }
 }
