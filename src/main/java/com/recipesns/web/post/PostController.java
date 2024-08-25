@@ -1,9 +1,9 @@
 package com.recipesns.web.post;
 
-import com.recipesns.common.response.ApiResponse;
+import com.recipesns.web.response.ApiResponse;
 import com.recipesns.web.post.dto.PostCreateRequestDto;
-import com.recipesns.domain.post.Post;
-import com.recipesns.service.post.PostService;
+import com.recipesns.core.model.post.Post;
+import com.recipesns.core.service.post.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;

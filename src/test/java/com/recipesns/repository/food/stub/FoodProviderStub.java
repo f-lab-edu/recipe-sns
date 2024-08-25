@@ -1,7 +1,7 @@
 package com.recipesns.repository.food.stub;
 
-import com.recipesns.service.food.provider.responce.FoodData;
-import com.recipesns.service.food.FoodProvider;
+import com.recipesns.core.service.food.provider.responce.FoodData;
+import com.recipesns.core.service.food.FoodProvider;
 
 import java.util.List;
 

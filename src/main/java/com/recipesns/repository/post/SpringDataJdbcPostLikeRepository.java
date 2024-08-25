@@ -1,6 +1,6 @@
 package com.recipesns.repository.post;
 
-import com.recipesns.domain.post.PostLike;
+import com.recipesns.core.model.post.PostLike;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.Optional;

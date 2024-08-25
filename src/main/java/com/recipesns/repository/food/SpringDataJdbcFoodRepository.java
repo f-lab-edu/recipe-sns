@@ -1,6 +1,6 @@
 package com.recipesns.repository.food;
 
-import com.recipesns.domain.food.Food;
+import com.recipesns.core.model.food.Food;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
 

@@ -1,7 +1,7 @@
 package com.recipesns.repository.post;
 
-import com.recipesns.domain.post.Post;
-import com.recipesns.domain.post.repository.PostRepository;
+import com.recipesns.core.model.post.Post;
+import com.recipesns.core.repository.post.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

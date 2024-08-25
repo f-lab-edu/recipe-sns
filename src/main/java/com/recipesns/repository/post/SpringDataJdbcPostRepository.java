@@ -1,6 +1,6 @@
 package com.recipesns.repository.post;
 
-import com.recipesns.domain.post.Post;
+import com.recipesns.core.model.post.Post;
 import org.springframework.data.relational.core.sql.LockMode;
 import org.springframework.data.relational.repository.Lock;
 import org.springframework.data.repository.CrudRepository;

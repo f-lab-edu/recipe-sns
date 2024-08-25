@@ -1,8 +1,8 @@
 package com.recipesns.repository.food;
 
 import com.recipesns.web.food.dto.FoodSearchRequestDto;
-import com.recipesns.domain.food.Food;
-import com.recipesns.service.food.provider.responce.FoodData;
+import com.recipesns.core.model.food.Food;
+import com.recipesns.core.service.food.provider.responce.FoodData;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

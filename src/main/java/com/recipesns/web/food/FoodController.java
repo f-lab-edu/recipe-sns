@@ -1,8 +1,8 @@
 package com.recipesns.web.food;
 
 import com.recipesns.web.food.dto.FoodSearchRequestDto;
-import com.recipesns.domain.food.Food;
-import com.recipesns.service.food.FoodService;
+import com.recipesns.core.model.food.Food;
+import com.recipesns.core.service.food.FoodService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;

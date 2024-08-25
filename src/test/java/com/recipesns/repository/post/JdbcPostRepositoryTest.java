@@ -1,9 +1,9 @@
 package com.recipesns.repository.post;
 
-import com.recipesns.domain.post.Post;
-import com.recipesns.domain.post.PostFood;
-import com.recipesns.domain.post.PostImage;
-import com.recipesns.domain.post.PostImages;
+import com.recipesns.core.model.post.Post;
+import com.recipesns.core.model.post.PostFood;
+import com.recipesns.core.model.post.PostImage;
+import com.recipesns.core.model.post.PostImages;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
