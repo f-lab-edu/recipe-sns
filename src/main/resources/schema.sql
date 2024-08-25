@@ -2,6 +2,7 @@ drop table if exists FOOD CASCADE;
 drop table if exists MEMBER CASCADE;
 drop table if exists POST CASCADE;
 drop table if exists POST_LIKE CASCADE;
+drop table if exists POST_FOOD CASCADE;
 
 create table FOOD (
     id bigint auto_increment primary key,
@@ -31,7 +32,7 @@ create table POST (
     member_id bigint not null,
     like_count bigint not null,
     content varchar(255) not null,
-    images json not null,
+    images text not null,
     created_at timestamp not null,
     updated_at timestamp,
     foreign key (member_id) references MEMBER(id)

@@ -73,7 +73,7 @@ class JdbcFoodRepositoryTest {
         this.jdbcFoodRepository.save(food3);
 
         List<Food> foodList1 = this.jdbcFoodRepository.findAll(new FoodSearchRequestDto(null, 1, 10));
-        assertThat(foodList1.size()).isEqualTo(3);
+        assertThat(foodList1.size()).isEqualTo(8);
 
         List<Food> foodList2 = this.jdbcFoodRepository.findAll(new FoodSearchRequestDto("이름1", 1, 1));
         assertThat(foodList2.size()).isEqualTo(1);

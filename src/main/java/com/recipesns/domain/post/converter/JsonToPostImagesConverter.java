@@ -20,7 +20,6 @@ public class JsonToPostImagesConverter implements Converter<String, PostImages> 
     @Override
     public PostImages convert(String source) {
         try {
-//            String jsonSource = objectMapper.readValue(source, String.class);
             return objectMapper.readValue(source, PostImages.class);
         } catch (IOException e) {
             throw JSON_CONVERTER_ERROR.exception();
