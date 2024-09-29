@@ -43,4 +43,13 @@ public class MemberController {
 
         return ApiResponse.success();
     }
+
+    @PostMapping("/logout")
+    public ApiResponse<Void> logout(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
+        return ApiResponse.success();
+    }
 }
