@@ -8,15 +8,15 @@ import lombok.Getter;
 @Getter
 public class MemberCreateRequestDto {
 
-    private static final String USERNAME_REGEX_PATTERN = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,}$";
-    private static final String PASSWORD_REGEX_PATTERN = "^(?=.*[A-Z])(?=.*[0-9])(?=.*[a-z])(?=.*[!@#$%^&*()-+=]).{8,}$";
+    private static final String USERNAME_VALIDATION_PATTERN = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,}$";
+    private static final String CREDENTIALS_VALIDATION_PATTERN = "^(?=.*[A-Z])(?=.*[0-9])(?=.*[a-z])(?=.*[!@#$%^&*()-+=]).{8,}$";
 
     @NotBlank(message = "아이디를 입력해주세요")
-    @Pattern(regexp = USERNAME_REGEX_PATTERN, message = "아이디는 영어, 숫자의 조합으로 6자 이상이어야 합니다.")
+    @Pattern(regexp = USERNAME_VALIDATION_PATTERN, message = "아이디는 영어, 숫자의 조합으로 6자 이상이어야 합니다.")
     private String username;
 
     @NotBlank(message = "비밀번호를 입력해주세요")
-    @Pattern(regexp = PASSWORD_REGEX_PATTERN, message = "비밀번호는 영어, 숫자, 특수문자의 조합으로 8자 이상이어야 합니다.")
+    @Pattern(regexp = CREDENTIALS_VALIDATION_PATTERN, message = "비밀번호는 영어, 숫자, 특수문자의 조합으로 8자 이상이어야 합니다.")
     private String password;
 
     @NotBlank(message = "확인 비밀번호를 입력해주세요")
