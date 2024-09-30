@@ -41,7 +41,7 @@ public class MemberController {
         }
 
         HttpSession session = request.getSession();
-        session.setAttribute("loginMember", loginMember);
+        session.setAttribute("loginMember", loginMember.getId());
 
         return ApiResponse.success();
     }
