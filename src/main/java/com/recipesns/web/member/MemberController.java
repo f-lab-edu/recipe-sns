@@ -5,6 +5,7 @@ import com.recipesns.core.service.member.LoginService;
 import com.recipesns.core.service.member.MemberService;
 import com.recipesns.web.member.dto.LoginRequestDto;
 import com.recipesns.web.member.dto.MemberCreateRequestDto;
+import com.recipesns.web.member.dto.MemberResponseDto;
 import com.recipesns.web.response.ApiResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -26,8 +27,8 @@ public class MemberController {
     private final LoginService loginService;
 
     @PostMapping("/signup")
-    public ApiResponse<Member> signup(@Valid @RequestBody MemberCreateRequestDto dto) {
-        return ApiResponse.success(memberService.joinMember(dto));
+    public ApiResponse<MemberResponseDto> signup(@Valid @RequestBody MemberCreateRequestDto dto) {
+        return ApiResponse.success(new MemberResponseDto(memberService.joinMember(dto)));
     }
 
     @PostMapping("/login")
