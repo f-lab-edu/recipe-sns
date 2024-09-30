@@ -11,7 +11,8 @@ public enum BusinessError {
 
     MEMBER_DUPLICATE_ERROR(4004, "중복된 아이디를 사용할 수 없습니다"),
     MEMBER_NOT_FOUND_ERROR(4005, "아이디 또는 비밀번호를 확인해주세요"),
-    MEMBER_PASSWORD_CONFIRMATION_ERROR(4006, "확인 비밀번호를 확인해주세요");
+    MEMBER_PASSWORD_CONFIRMATION_ERROR(4006, "확인 비밀번호를 확인해주세요"),
+    MEMBER_LOGIN_ERROR(4007, "로그인 후 이용할 수 있습니다");
 
     private final int code;
     private final String message;

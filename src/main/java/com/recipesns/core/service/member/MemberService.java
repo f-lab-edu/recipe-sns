@@ -25,7 +25,7 @@ public class MemberService {
         Member member = memberMapper.from(dto);
         Optional<Member> duplicatedMember = memberRepository.findByUsername(member.getUsername());
         if (duplicatedMember.isPresent()) {
-            throw MEMBER_DUPlICATION_ERROR.exception();
+            throw MEMBER_DUPLICATE_ERROR.exception();
         }
         return memberRepository.save(member);
     }
