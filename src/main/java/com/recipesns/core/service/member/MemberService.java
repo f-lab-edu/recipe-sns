@@ -6,6 +6,7 @@ import com.recipesns.core.repository.member.MemberRepository;
 import com.recipesns.web.member.dto.MemberCreateRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -18,6 +19,7 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final MemberMapper memberMapper;
 
+    @Transactional
     public Member joinMember(MemberCreateRequestDto dto) {
         if (!dto.checkPassword()) {
             throw MEMBER_PASSWORD_CONFIRMATION_ERROR.exception();
