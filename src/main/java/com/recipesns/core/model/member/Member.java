@@ -43,4 +43,8 @@ public class Member {
     public int hashCode() {
         return Objects.hash(username, password, nickname, createdAt, updatedAt, withdrawalAt);
     }
+    // 테스트 용도
+    public void setId(Long sequence) {
+        this.id = sequence;
+    }
 }
