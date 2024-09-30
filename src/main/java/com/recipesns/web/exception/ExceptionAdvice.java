@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class ExceptionAdvice {
 
     private static final int DEFAULT_ERROR_CODE = 4000;
+    private static final String DEFAULT_ERROR_MESSAGE = "잘못된 입력값입니다";
 
     @ExceptionHandler(SystemException.class)
     public ApiResponse<Void> SystemExceptionHandler(SystemException e) {
@@ -29,7 +30,11 @@ public class ExceptionAdvice {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiResponse<Void> MethodArgumentNotValidExceptionHandler(MethodArgumentNotValidException e) {
-        String errorMessage = e.getBindingResult().getFieldError().getDefaultMessage();
+        BindingResult bindingResult = e.getBindingResult();
+
+        FieldError fieldError = bindingResult.getFieldError();
+
+        String errorMessage = fieldError != null ? fieldError.getDefaultMessage() : DEFAULT_ERROR_MESSAGE;
         return ApiResponse.methodArgumentNotValidException(DEFAULT_ERROR_CODE, errorMessage);
     }
 
