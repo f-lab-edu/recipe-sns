@@ -8,6 +8,7 @@ import com.recipesns.web.member.dto.MemberCreateRequestDto;
 import com.recipesns.web.response.ApiResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,12 +26,12 @@ public class MemberController {
     private final LoginService loginService;
 
     @PostMapping("/signup")
-    public ApiResponse<Member> signup(@RequestBody MemberCreateRequestDto dto) {
+    public ApiResponse<Member> signup(@Valid @RequestBody MemberCreateRequestDto dto) {
         return ApiResponse.success(memberService.joinMember(dto));
     }
 
     @PostMapping("/login")
-    public ApiResponse<Void> login(@RequestBody LoginRequestDto dto, HttpServletRequest request) {
+    public ApiResponse<Void> login(@Valid @RequestBody LoginRequestDto dto, HttpServletRequest request) {
 
         Member loginMember = loginService.login(dto.getUsername(), dto.getPassword());
 

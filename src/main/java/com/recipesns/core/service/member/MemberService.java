@@ -19,6 +19,9 @@ public class MemberService {
     private final MemberMapper memberMapper;
 
     public Member joinMember(MemberCreateRequestDto dto) {
+        if (!dto.checkPassword()) {
+            throw MEMBER_PASSWORD_CONFIRMATION_ERROR.exception();
+        }
         Member member = memberMapper.from(dto);
         Optional<Member> duplicatedMember = memberRepository.findByUsername(member.getUsername());
         if (duplicatedMember.isPresent()) {
