@@ -1,0 +1,82 @@
+package com.recipesns.core.service.member;
+
+import com.recipesns.core.model.member.Member;
+import com.recipesns.core.model.member.MemberMapper;
+import com.recipesns.repository.member.stub.MemoryMemberRepository;
+import com.recipesns.web.exception.BusinessError;
+import com.recipesns.web.exception.BusinessException;
+import com.recipesns.web.member.dto.MemberCreateRequestDto;
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.*;
+
+class LoginServiceTest {
+
+    private final MemoryMemberRepository memberRepository = new MemoryMemberRepository();
+    private final LoginService loginService = new LoginService(memberRepository);
+
+    private final MemberMapper memberMapper = new MemberMapper();
+
+    @BeforeEach
+    public void beForEach() {
+        memberRepository.clearMemory();
+    }
+
+    @Test
+    @DisplayName("로그인시 비밀번호가 틀리면 예외가 던져진다")
+    void login_password_exception() {
+
+        MemberCreateRequestDto dto = MemberCreateRequestDto.builder()
+                .username("kimbro97")
+                .password("hp12081208!")
+                .confirmPassword("hp12081208!")
+                .nickname("rlagudwog")
+                .build();
+        Member member = memberMapper.from(dto);
+        memberRepository.save(member);
+
+        assertThatThrownBy(() -> loginService.login("kimbro97", "hp12081208"))
+                .isInstanceOf(BusinessException.class)
+                .hasMessageContaining("아이디 또는 비밀번호를 확인해주세요");
+    }
+
+    @Test
+    @DisplayName("로그인시 아이디가 틀리면 예외가 던져진다")
+    void login_username_exception() {
+
+        MemberCreateRequestDto dto = MemberCreateRequestDto.builder()
+                .username("kimbro97")
+                .password("hp12081208!")
+                .confirmPassword("hp12081208!")
+                .nickname("rlagudwog")
+                .build();
+        Member member = memberMapper.from(dto);
+        memberRepository.save(member);
+
+        assertThatThrownBy(() -> loginService.login("kimbro9", "hp12081208!"))
+                .isInstanceOf(BusinessException.class)
+                .hasMessageContaining("아이디 또는 비밀번호를 확인해주세요");
+    }
+
+    @Test
+    @DisplayName("로그인 성공")
+    void login_success() {
+
+        MemberCreateRequestDto dto = MemberCreateRequestDto.builder()
+                .username("kimbro97")
+                .password("hp12081208!")
+                .confirmPassword("hp12081208!")
+                .nickname("rlagudwog")
+                .build();
+        Member member = memberMapper.from(dto);
+        Member savedMember = memberRepository.save(member);
+
+        Member loginMember = loginService.login("kimbro97", "hp12081208!");
+
+        assertThat(savedMember).isEqualTo(loginMember);
+
+    }
+}

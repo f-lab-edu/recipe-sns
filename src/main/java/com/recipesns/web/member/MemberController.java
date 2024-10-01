@@ -16,8 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import static com.recipesns.web.exception.BusinessError.*;
-
 @RestController
 @RequestMapping("/members")
 @RequiredArgsConstructor
@@ -35,10 +33,6 @@ public class MemberController {
     public ApiResponse<Void> login(@Valid @RequestBody LoginRequestDto dto, HttpServletRequest request) {
 
         Member loginMember = loginService.login(dto.getUsername(), dto.getPassword());
-
-        if (loginMember == null) {
-            throw MEMBER_NOT_FOUND_ERROR.exception();
-        }
 
         HttpSession session = request.getSession();
         session.setAttribute("loginMember", loginMember.getId());

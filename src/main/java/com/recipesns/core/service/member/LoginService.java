@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
+import static com.recipesns.web.exception.BusinessError.MEMBER_NOT_FOUND_ERROR;
+
 @Service
 @RequiredArgsConstructor
 public class LoginService {
@@ -15,6 +17,6 @@ public class LoginService {
     public Member login(String username, String password) {
         return memberRepository.findByUsername(username)
                 .filter(member -> BCrypt.checkpw(password, member.getPassword()))
-                .orElse(null);
+                .orElseThrow(MEMBER_NOT_FOUND_ERROR::exception);
     }
 }
