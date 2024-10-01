@@ -3,10 +3,9 @@ package com.recipesns.core.service.member;
 import com.recipesns.core.model.member.Member;
 import com.recipesns.core.model.member.MemberMapper;
 import com.recipesns.repository.member.stub.MemoryMemberRepository;
-import com.recipesns.web.exception.BusinessError;
 import com.recipesns.web.exception.BusinessException;
+import com.recipesns.web.member.dto.LoginRequestDto;
 import com.recipesns.web.member.dto.MemberCreateRequestDto;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -38,7 +37,12 @@ class LoginServiceTest {
         Member member = memberMapper.from(dto);
         memberRepository.save(member);
 
-        assertThatThrownBy(() -> loginService.login("kimbro97", "hp12081208"))
+        LoginRequestDto loginDto = LoginRequestDto.builder()
+                .username("kimbro97")
+                .password("hp12081208")
+                .build();
+
+        assertThatThrownBy(() -> loginService.login(loginDto))
                 .isInstanceOf(BusinessException.class)
                 .hasMessageContaining("아이디 또는 비밀번호를 확인해주세요");
     }
@@ -56,7 +60,12 @@ class LoginServiceTest {
         Member member = memberMapper.from(dto);
         memberRepository.save(member);
 
-        assertThatThrownBy(() -> loginService.login("kimbro9", "hp12081208!"))
+        LoginRequestDto loginDto = LoginRequestDto.builder()
+                .username("kimbro9")
+                .password("hp12081208!")
+                .build();
+
+        assertThatThrownBy(() -> loginService.login(loginDto))
                 .isInstanceOf(BusinessException.class)
                 .hasMessageContaining("아이디 또는 비밀번호를 확인해주세요");
     }
@@ -74,7 +83,12 @@ class LoginServiceTest {
         Member member = memberMapper.from(dto);
         Member savedMember = memberRepository.save(member);
 
-        Member loginMember = loginService.login("kimbro97", "hp12081208!");
+        LoginRequestDto loginDto = LoginRequestDto.builder()
+                .username("kimbro97")
+                .password("hp12081208!")
+                .build();
+
+        Member loginMember = loginService.login(loginDto);
 
         assertThat(savedMember).isEqualTo(loginMember);
 

@@ -2,6 +2,7 @@ package com.recipesns.core.service.member;
 
 import com.recipesns.core.model.member.Member;
 import com.recipesns.core.repository.member.MemberRepository;
+import com.recipesns.web.member.dto.LoginRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
@@ -14,9 +15,10 @@ public class LoginService {
 
     private final MemberRepository memberRepository;
 
-    public Member login(String username, String password) {
-        return memberRepository.findByUsername(username)
-                .filter(member -> BCrypt.checkpw(password, member.getPassword()))
+    public Member login(LoginRequestDto dto) {
+        dto.validate();
+        return memberRepository.findByUsername(dto.getUsername())
+                .filter(member -> BCrypt.checkpw(dto.getPassword(), member.getPassword()))
                 .orElseThrow(MEMBER_NOT_FOUND_ERROR::exception);
     }
 }

@@ -1,20 +1,43 @@
 package com.recipesns.web.member.dto;
 
-import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
 import lombok.Getter;
+
+import static com.recipesns.web.exception.BusinessError.*;
 
 @Getter
 public class LoginRequestDto {
 
-    @NotBlank(message = "아이디를 입력해주세요")
     private String username;
-    @NotBlank(message = "비밀번호를 입력해주세요")
     private String password;
 
     @Builder
     public LoginRequestDto(String username, String password) {
         this.username = username;
         this.password = password;
+    }
+
+    public boolean validate() {
+        if (!checkUsername()) {
+            throw MEMBER_LOGIN_USERNAME_ERROR.exception();
+        }
+        if (!checkPassword()) {
+            throw MEMBER_LOGIN_PASSWORD_ERROR.exception();
+        }
+        return true;
+    }
+
+    private boolean checkUsername() {
+        if (username == null) {
+            return false;
+        }
+        return !username.isBlank();
+    }
+
+    private boolean checkPassword() {
+        if (password == null) {
+            return false;
+        }
+        return !password.isBlank();
     }
 }

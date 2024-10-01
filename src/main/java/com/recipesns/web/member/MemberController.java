@@ -25,14 +25,14 @@ public class MemberController {
     private final LoginService loginService;
 
     @PostMapping("/signup")
-    public ApiResponse<MemberResponseDto> signup(@Valid @RequestBody MemberCreateRequestDto dto) {
+    public ApiResponse<MemberResponseDto> signup(@RequestBody MemberCreateRequestDto dto) {
         return ApiResponse.success(new MemberResponseDto(memberService.joinMember(dto)));
     }
 
     @PostMapping("/login")
-    public ApiResponse<Void> login(@Valid @RequestBody LoginRequestDto dto, HttpServletRequest request) {
+    public ApiResponse<Void> login(@RequestBody LoginRequestDto dto, HttpServletRequest request) {
 
-        Member loginMember = loginService.login(dto.getUsername(), dto.getPassword());
+        Member loginMember = loginService.login(dto);
 
         HttpSession session = request.getSession();
         session.setAttribute("loginMember", loginMember.getId());

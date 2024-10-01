@@ -1,28 +1,22 @@
 package com.recipesns.web.member.dto;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
 import lombok.Builder;
 import lombok.Getter;
+
+import static com.recipesns.web.exception.BusinessError.*;
 
 @Getter
 public class MemberCreateRequestDto {
 
-    private static final String USERNAME_VALIDATION_PATTERN = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,}$";
-    private static final String CREDENTIALS_VALIDATION_PATTERN = "^(?=.*[A-Z])(?=.*[0-9])(?=.*[a-z])(?=.*[!@#$%^&*()-+=]).{8,}$";
+    private static final String USERNAME_VALIDATION_PATTERN = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,12}$";
+    private static final String CREDENTIALS_VALIDATION_PATTERN = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,16}$";
 
-    @NotBlank(message = "아이디를 입력해주세요")
-    @Pattern(regexp = USERNAME_VALIDATION_PATTERN, message = "아이디는 영어, 숫자의 조합으로 6자 이상이어야 합니다.")
     private String username;
 
-    @NotBlank(message = "비밀번호를 입력해주세요")
-    @Pattern(regexp = CREDENTIALS_VALIDATION_PATTERN, message = "비밀번호는 영어, 숫자, 특수문자의 조합으로 8자 이상이어야 합니다.")
     private String password;
 
-    @NotBlank(message = "확인 비밀번호를 입력해주세요")
     private String confirmPassword;
 
-    @NotBlank(message = "닉네임을 입력해주세요")
     private String nickname;
 
     @Builder
@@ -33,7 +27,56 @@ public class MemberCreateRequestDto {
         this.nickname = nickname;
     }
 
-    public boolean checkPassword() {
+    public boolean validate() {
+        if (!checkUsername()) {
+            throw MEMBER_USERNAME_ERROR.exception();
+        }
+        if (!checkPassword()) {
+            throw MEMBER_PASSWORD_ERROR.exception();
+        }
+        if (!checkConfirmPassword()) {
+            throw MEMBER_PASSWORD_CONFIRMATION_ERROR.exception();
+        }
+        if (!checkNickname()) {
+            throw MEMBER_NICKNAME_ERROR.exception();
+        }
+        return true;
+    }
+
+    private boolean checkUsername() {
+        if (username == null) {
+            return false;
+        }
+        if (username.isBlank()) {
+            return false;
+        }
+        return username.matches(USERNAME_VALIDATION_PATTERN);
+    }
+
+    private boolean checkPassword() {
+        if (password == null) {
+            return false;
+        }
+        if (password.isBlank()) {
+            return false;
+        }
+        return password.matches(CREDENTIALS_VALIDATION_PATTERN);
+    }
+
+    private boolean checkConfirmPassword() {
+        if (confirmPassword == null) {
+            return false;
+        }
+        if (confirmPassword.isBlank()) {
+            return false;
+        }
         return password.equals(confirmPassword);
+    }
+
+    private boolean checkNickname() {
+        if (nickname == null) {
+            return false;
+        }
+        return !nickname.isBlank();
     }
 }
