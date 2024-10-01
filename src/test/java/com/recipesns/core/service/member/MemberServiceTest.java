@@ -2,6 +2,8 @@ package com.recipesns.core.service.member;
 
 import com.recipesns.core.model.member.Member;
 import com.recipesns.core.model.member.MemberMapper;
+import com.recipesns.core.security.encoder.BCryptPasswordEncoder;
+import com.recipesns.core.security.encoder.PasswordEncoder;
 import com.recipesns.repository.member.stub.MemoryMemberRepository;
 import com.recipesns.web.exception.BusinessException;
 import com.recipesns.web.member.dto.MemberCreateRequestDto;
@@ -16,7 +18,9 @@ import static org.assertj.core.api.Assertions.*;
 class MemberServiceTest {
 
     MemoryMemberRepository memberRepository = new MemoryMemberRepository();
-    MemberMapper memberMapper = new MemberMapper();
+
+    PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    MemberMapper memberMapper = new MemberMapper(passwordEncoder);
 
     MemberService memberService = new MemberService(memberRepository, memberMapper);
 
