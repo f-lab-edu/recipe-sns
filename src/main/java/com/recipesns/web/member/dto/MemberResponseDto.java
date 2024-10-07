@@ -2,9 +2,11 @@ package com.recipesns.web.member.dto;
 
 import com.recipesns.core.model.member.Member;
 import lombok.Builder;
+import lombok.Getter;
 
 import java.time.LocalDateTime;
 
+@Getter
 public class MemberResponseDto {
 
     private String username;
