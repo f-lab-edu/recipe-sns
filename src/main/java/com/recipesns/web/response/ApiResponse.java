@@ -29,4 +29,8 @@ public class ApiResponse<T> {
     public static ApiResponse<Void> businessException(int code, String message) {
         return new ApiResponse<>(code, message, null);
     }
+
+    public static ApiResponse<Void> methodArgumentNotValidException(int code, String message) {
+        return new ApiResponse<>(code, message, null);
+    }
 }

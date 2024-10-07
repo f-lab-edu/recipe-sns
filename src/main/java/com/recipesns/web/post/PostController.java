@@ -1,5 +1,6 @@
 package com.recipesns.web.post;
 
+import com.recipesns.web.argumentresolver.Login;
 import com.recipesns.web.response.ApiResponse;
 import com.recipesns.web.post.dto.PostCreateRequestDto;
 import com.recipesns.core.model.post.Post;
@@ -22,13 +23,13 @@ public class PostController {
     }
 
     @PostMapping("/{postId}/like")
-    public ApiResponse<Void> like(@PathVariable Long postId, @RequestParam Long memberId) {
+    public ApiResponse<Void> like(@Login Long memberId, @PathVariable Long postId) {
         postService.likePost(postId, memberId);
         return ApiResponse.success();
     }
 
     @PostMapping("/{postId}/unlike")
-    public ApiResponse<Void> unLike(@PathVariable Long postId, @RequestParam Long memberId) {
+    public ApiResponse<Void> unLike(@Login Long memberId, @PathVariable Long postId) {
         postService.unLikePost(postId, memberId);
         return ApiResponse.success();
     }

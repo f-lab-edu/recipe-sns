@@ -1,7 +1,5 @@
 package com.recipesns.core.service.post;
 
-import com.recipesns.core.service.post.PostLikeService;
-import com.recipesns.core.service.post.PostService;
 import com.recipesns.web.post.dto.FoodRequest;
 import com.recipesns.web.post.dto.ImageRequest;
 import com.recipesns.web.post.dto.PostCreateRequestDto;
