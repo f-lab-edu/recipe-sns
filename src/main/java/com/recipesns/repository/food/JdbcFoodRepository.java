@@ -4,33 +4,31 @@ import com.recipesns.web.food.dto.FoodSearchRequestDto;
 import com.recipesns.core.model.food.Food;
 import com.recipesns.core.repository.food.FoodRepository;
 import com.recipesns.core.service.food.provider.responce.FoodData;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
-import javax.sql.DataSource;
 import java.util.List;
+import java.util.stream.IntStream;
 
 @Repository
 public class JdbcFoodRepository implements FoodRepository {
 
-    private final SpringDataJdbcFoodRepository repository;
-    private final JdbcTemplate jdbcTemplate;
+    private final JpaFoodRepository jpaRepository;
 
-    public JdbcFoodRepository(SpringDataJdbcFoodRepository repository, DataSource dataSource) {
-        this.repository = repository;
-        this.jdbcTemplate = new JdbcTemplate(dataSource);
+    public JdbcFoodRepository(JpaFoodRepository jpaRepository) {
+        this.jpaRepository = jpaRepository;
     }
 
     @Override
     public Food save(Food food) {
-        return repository.save(food);
+        return jpaRepository.save(food);
     }
 
     @Override
     public Food findById(Long id) {
-        return repository.findById(id).orElse(null);
+        return jpaRepository.findById(id).orElse(null);
     }
 
     @Override
@@ -41,20 +39,24 @@ public class JdbcFoodRepository implements FoodRepository {
         PageRequest pageable = PageRequest.of(page - 1, size);
 
         if (StringUtils.hasText(foodName)) {
-            return repository.findByFoodNameContaining(foodName, pageable);
+            return jpaRepository.findByFoodNameContaining(foodName, pageable);
         }
 
-        return repository.findAll(pageable);
+        Page<Food> foods = jpaRepository.findAll(pageable);
+        return foods.getContent();
     }
 
     @Override
     public Integer bulkUpdate(List<FoodData> foodList) {
-        String sql = "UPDATE food SET food_name = ?, food_size = ?, carbohydrate = ?, protein = ?, calorie = ?, fat = ? WHERE food_code = ?";
 
-        List<Object[]> batch = foodList.stream()
-                .map(food -> new Object[]{food.getFoodName(), food.getFoodSize(), food.getCarbohydrate(), food.getProtein(), food.getCalorie(), food.getFat(), food.getFoodCode()})
+        List<String> foodCodes = foodList.stream()
+                .map(FoodData::getFoodCode)
                 .toList();
-        jdbcTemplate.batchUpdate(sql, batch);
-        return foodList.size();
+
+        List<Food> foods = jpaRepository.findAllByFoodCodeIn(foodCodes);
+
+        IntStream.range(0, foodList.size())
+                .forEach(i -> foods.get(i).updateFood(foodList.get(i)));
+        return foods.size();
     }
 }
