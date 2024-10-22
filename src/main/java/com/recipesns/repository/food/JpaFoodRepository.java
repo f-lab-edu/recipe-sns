@@ -2,12 +2,11 @@ package com.recipesns.repository.food;
 
 import com.recipesns.core.model.food.Food;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface SpringDataJdbcFoodRepository extends CrudRepository<Food, Long> {
-    Food findByFoodCode(String foodCode);
-    List<Food> findAll(Pageable pageable);
+public interface JpaFoodRepository extends JpaRepository<Food, Long> {
     List<Food> findByFoodNameContaining(String foodName, Pageable pageable);
+    List<Food> findAllByFoodCodeIn(List<String> foodCodes);
 }

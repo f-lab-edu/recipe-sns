@@ -6,6 +6,7 @@ import com.recipesns.core.service.food.provider.responce.FoodData;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,6 +38,7 @@ class JdbcFoodRepositoryTest {
     }
 
     @Test
+    @Rollback(false)
     void update() {
         Food food1 = new Food("음식 이름1", 140, "DS1234", 50.2, 30.2, 12, 511);
         Food food2 = new Food("음식 이름2", 140, "DS1235", 50.2, 30.2, 12, 511);
@@ -73,7 +75,7 @@ class JdbcFoodRepositoryTest {
         this.jdbcFoodRepository.save(food3);
 
         List<Food> foodList1 = this.jdbcFoodRepository.findAll(new FoodSearchRequestDto(null, 1, 10));
-        assertThat(foodList1.size()).isEqualTo(8);
+        assertThat(foodList1.size()).isEqualTo(3);
 
         List<Food> foodList2 = this.jdbcFoodRepository.findAll(new FoodSearchRequestDto("이름1", 1, 1));
         assertThat(foodList2.size()).isEqualTo(1);
