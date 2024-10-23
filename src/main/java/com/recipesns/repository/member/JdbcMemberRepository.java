@@ -11,21 +11,21 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class JdbcMemberRepository implements MemberRepository {
 
-    private final SpringDataJdbcMemberRepository repository;
+    private final JpaMemberRepository jpaMemberRepository;
 
     @Override
     public Member save(Member member) {
-        return repository.save(member);
+        return jpaMemberRepository.save(member);
     }
 
     @Override
     public Optional<Member> findById(Long id) {
-        return repository.findById(id);
+        return jpaMemberRepository.findById(id);
     }
 
     @Override
     public Optional<Member> findByUsername(String username) {
-         return repository.findByUsername(username);
+         return jpaMemberRepository.findByUsername(username);
     }
 
     @Override

@@ -1,24 +1,27 @@
 package com.recipesns.core.model.member;
 
+import com.recipesns.core.model.BaseEntity;
+import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Builder;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.relational.core.mapping.Table;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Getter
-@Table("MEMBER")
-public class Member {
+@Entity
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class Member extends BaseEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "member_id")
     private Long id;
     private String username;
     private String password;
     private String nickname;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
     private LocalDateTime withdrawalAt;
 
     @Builder
@@ -26,8 +29,6 @@ public class Member {
         this.username = username;
         this.password = password;
         this.nickname = nickname;
-        this.createdAt = LocalDateTime.now();
-        this.updatedAt = LocalDateTime.now();
         this.withdrawalAt = null;
     }
 
@@ -36,12 +37,12 @@ public class Member {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Member member = (Member) o;
-        return Objects.equals(username, member.username) && Objects.equals(password, member.password) && Objects.equals(nickname, member.nickname) && Objects.equals(createdAt, member.createdAt) && Objects.equals(updatedAt, member.updatedAt) && Objects.equals(withdrawalAt, member.withdrawalAt);
+        return Objects.equals(username, member.username) && Objects.equals(password, member.password) && Objects.equals(nickname, member.nickname) && Objects.equals(withdrawalAt, member.withdrawalAt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(username, password, nickname, createdAt, updatedAt, withdrawalAt);
+        return Objects.hash(username, password, nickname, withdrawalAt);
     }
     // 테스트 용도
     public void setId(Long sequence) {

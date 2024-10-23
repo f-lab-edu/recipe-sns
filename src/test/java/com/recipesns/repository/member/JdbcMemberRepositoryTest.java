@@ -2,7 +2,6 @@ package com.recipesns.repository.member;
 
 import com.recipesns.core.model.member.Member;
 import com.recipesns.core.repository.member.MemberRepository;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
