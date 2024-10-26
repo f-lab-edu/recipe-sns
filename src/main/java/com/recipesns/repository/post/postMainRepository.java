@@ -9,17 +9,18 @@ import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
-public class JdbcPostRepository implements PostRepository {
+public class postMainRepository implements PostRepository {
 
-    private final SpringDataJdbcPostRepository repository;
+    private final JpaPostRepository jpaPostRepository;
 
     @Override
-    public Post save(Post post) {
-        return repository.save(post);
+    public Long save(Post post) {
+        Post savedPost = jpaPostRepository.save(post);
+        return savedPost.getId();
     }
 
     @Override
     public Optional<Post> findById(Long id) {
-        return repository.findById(id);
+        return jpaPostRepository.findById(id);
     }
 }

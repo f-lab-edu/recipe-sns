@@ -5,6 +5,7 @@ import com.recipesns.core.model.post.Post;
 import java.util.Optional;
 
 public interface PostRepository {
-    Post save(Post post);
+    Long save(Post post);
+
     Optional<Post> findById(Long id);
 }

@@ -10,5 +10,6 @@ public interface FoodRepository {
     Food save(Food food);
     Food findById(Long id);
     List<Food> findAll(FoodSearchRequestDto cond);
+    List<Food> findAllByIdIn(List<Long> id);
     Integer bulkUpdate(List<FoodData> foodList);
 }

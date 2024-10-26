@@ -32,6 +32,11 @@ public class JdbcFoodRepository implements FoodRepository {
     }
 
     @Override
+    public List<Food> findAllByIdIn(List<Long> id) {
+        return jpaRepository.findAllByIdIn(id);
+    }
+
+    @Override
     public List<Food> findAll(FoodSearchRequestDto cond) {
         String foodName = cond.getFoodName();
         Integer page = cond.getPage();

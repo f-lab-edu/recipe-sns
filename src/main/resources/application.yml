@@ -37,16 +37,12 @@ spring:
     show-sql: true
   sql:
     init:
-      mode: always
-      schema-locations: classpath:schema.sql
-      data-locations: classpath:data.sql
+      mode: never
 
 logging:
   level:
     org.hibernate.sql: debug
     org.hibernate.type: trace
-#    org.springframework.jdbc.core: DEBUG
-#    org.springframework.jdbc.support: DEBUG
 
 ---
 spring:
@@ -58,3 +54,7 @@ spring:
     url: ${DB_URL}
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true

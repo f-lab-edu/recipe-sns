@@ -1,4 +1,4 @@
-package com.recipesns;
+package com.recipesns.config;
 import com.recipesns.web.argumentresolver.LoginMemberArgumentResolver;
 import com.recipesns.web.interceptor.LoginCheckInterceptor;
 import org.springframework.context.annotation.Configuration;
