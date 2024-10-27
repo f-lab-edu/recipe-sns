@@ -28,7 +28,7 @@ public class PostService {
     public PostResponse createPost(PostServiceRequest request) {
 
         Member member = memberRepository.findById(request.getMemberId())
-                .orElseThrow(BusinessError.MEMBER_NOT_FOUND_ERROR::exception);
+                .orElseThrow(BusinessError.POST_MEMBER_NOT_FOUND_ERROR::exception);
 
         List<Food> foods = foodRepository.findAllByIdIn(request.getFoods());
 

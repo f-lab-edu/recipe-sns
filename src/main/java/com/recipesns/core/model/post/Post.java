@@ -38,6 +38,9 @@ public class Post extends BaseEntity {
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<PostFood> postFoods = new ArrayList<>();
 
+    @OneToMany(mappedBy = "post")
+    private List<PostLike> postLikes = new ArrayList<>();
+
     private String content;
 
     @Builder

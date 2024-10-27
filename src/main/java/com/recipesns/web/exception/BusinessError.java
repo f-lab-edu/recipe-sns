@@ -9,7 +9,8 @@ public enum BusinessError {
     DUPLICATE_LIKE_ERROR(4001, "좋아요를 중복으로 할 수 없습니다"),
     POST_LIKE_NOT_FOUND_ERROR(4002, "좋아요 데이터를 찾을 수 없습니다"),
     POST_NOT_FOUND_ERROR(4003, "게시물을 찾을 수 없습니다"),
-    POST_FODD_NOT_FOUND_EROOR(4004, "선택한 음식을 찾을 수 없습니다."),
+    POST_FOOD_NOT_FOUND_ERROR(4004, "선택한 음식을 찾을 수 없습니다."),
+    POST_MEMBER_NOT_FOUND_ERROR(4005, "회원 정보를 찾을 수 없습니다."),
 
     // MEMBER 4100번대
     MEMBER_DUPLICATE_ERROR(4101, "중복된 아이디를 사용할 수 없습니다"),
