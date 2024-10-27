@@ -1,36 +1,36 @@
 package com.recipesns.web.post;
 
-import com.recipesns.web.argumentresolver.Login;
-import com.recipesns.web.response.ApiResponse;
-import com.recipesns.web.post.dto.PostCreateRequestDto;
-import com.recipesns.core.model.post.Post;
+import com.recipesns.core.service.post.PostLikeService;
 import com.recipesns.core.service.post.PostService;
+import com.recipesns.core.service.post.request.PostLikeServiceRequest;
+import com.recipesns.core.service.post.request.PostServiceRequest;
+import com.recipesns.core.service.post.response.PostLikeResponse;
+import com.recipesns.core.service.post.response.PostResponse;
+import com.recipesns.web.argumentresolver.Login;
+import com.recipesns.web.post.request.PostCreateRequest;
+import com.recipesns.web.post.request.PostLikeCreateRequest;
+import com.recipesns.web.response.ApiResponse;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Slf4j
 @RestController
 @RequestMapping("/posts")
 @RequiredArgsConstructor
 public class PostController {
 
     private final PostService postService;
+    private final PostLikeService postLikeService;
 
     @PostMapping
-    public ApiResponse<Post> create(@RequestBody PostCreateRequestDto dto) {
-        return ApiResponse.success(postService.createPost(dto));
+    public ApiResponse<PostResponse> createPost(@Login Long memberId, @RequestBody PostCreateRequest request) {
+        return ApiResponse.success(postService.createPost(PostServiceRequest.of(request.getContent(), memberId, request.getFoods(), request.getPostImages())));
     }
 
-    @PostMapping("/{postId}/like")
-    public ApiResponse<Void> like(@Login Long memberId, @PathVariable Long postId) {
-        postService.likePost(postId, memberId);
-        return ApiResponse.success();
-    }
-
-    @PostMapping("/{postId}/unlike")
-    public ApiResponse<Void> unLike(@Login Long memberId, @PathVariable Long postId) {
-        postService.unLikePost(postId, memberId);
-        return ApiResponse.success();
+    @PostMapping("/like")
+    public ApiResponse<PostLikeResponse> createPostLike(@Login Long memberId, @RequestBody PostLikeCreateRequest request) {
+        return ApiResponse.success(postLikeService.postLike(PostLikeServiceRequest.of(request.getPostId(), memberId)));
     }
 }

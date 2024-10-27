@@ -1,23 +1,36 @@
 package com.recipesns.core.model.post;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.relational.core.mapping.Column;
-import org.springframework.data.relational.core.mapping.Table;
+import com.recipesns.core.model.BaseEntity;
+import com.recipesns.core.model.food.Food;
+import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import static jakarta.persistence.FetchType.LAZY;
 
-@Table("POST_FOOD")
-public class PostFood {
+@Getter
+@Entity
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class PostFood extends BaseEntity {
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "post_food_id")
     private Long id;
-    @Column("FOOD_ID")
-    private Long foodId;
-    @Column("POST_ID")
-    private Long postId;
-    private LocalDateTime createdAt;
 
-    public PostFood(Long foodId) {
-        this.foodId = foodId;
-        this.createdAt = LocalDateTime.now();
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "post_id")
+    private Post post;
+
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "food_id")
+    private Food food;
+
+    @Builder
+    private PostFood(Post post, Food food) {
+        this.post = post;
+        this.food = food;
     }
 }

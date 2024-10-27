@@ -1,33 +1,38 @@
 package com.recipesns.core.model.post;
 
+import com.recipesns.core.model.BaseEntity;
+import com.recipesns.core.model.member.Member;
+import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.relational.core.mapping.Column;
-import org.springframework.data.relational.core.mapping.Table;
-
-import java.time.LocalDateTime;
+import lombok.NoArgsConstructor;
 
 @Getter
-@Table("POST_LIKE")
-public class PostLike {
+@Entity
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class PostLike extends BaseEntity {
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "post_like_id")
     private Long id;
-    @Column("MEMBER_ID")
-    private Long memberId;
-    @Column("POST_ID")
-    private Long postId;
-    private LocalDateTime createdAt;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "post_id")
+    private Post post;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member;
 
     @Builder
-    public PostLike(Long memberId, Long postId) {
-        this.memberId = memberId;
-        this.postId = postId;
-        this.createdAt = LocalDateTime.now();
+    private PostLike(Post post, Member member) {
+        this.post = post;
+        this.member = member;
     }
 
-    //테스트용
-    public void setId(Long id) {
-        this.id = id;
+    public static PostLike create(Post post, Member member) {
+        return PostLike.builder().post(post).member(member).build();
     }
 }

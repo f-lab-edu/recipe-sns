@@ -1,12 +1,12 @@
-package com.recipesns.core.service.post;
+package com.recipesns.repository.post;
 
 import com.recipesns.core.model.food.Food;
 import com.recipesns.core.model.member.Member;
+import com.recipesns.core.model.post.Post;
 import com.recipesns.core.repository.food.FoodRepository;
 import com.recipesns.core.repository.member.MemberRepository;
-import com.recipesns.core.service.post.request.PostServiceRequest;
-import com.recipesns.core.service.post.response.PostResponse;
-import com.recipesns.web.exception.BusinessException;
+import com.recipesns.core.repository.post.PostRepository;
+import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,67 +22,63 @@ import static org.assertj.core.api.Assertions.*;
 @Transactional
 @SpringBootTest
 @ActiveProfiles("test")
-class PostServiceTest {
+class PostMainRepositoryTest {
 
     @Autowired
-    private PostService postService;
+    private PostRepository postRepository;
     @Autowired
     private MemberRepository memberRepository;
     @Autowired
     private FoodRepository foodRepository;
-
+    @Autowired
+    EntityManager em;
 
     @Test
-    @DisplayName("게시물 생성시 member 조회시 null이 리턴되면 예외가 던져진다")
-    void findMemberException() {
+    @DisplayName("게시물을 저장할 수 있다")
+    void save() {
         // given
-        Member member = createMember();
-        memberRepository.save(member);
+
+        Member member = memberRepository.save(createMember());
+
+        List<Map<String, String>> postImages = createPostImages();
 
         Food food1 = createFood("음식이름1", "AS234");
         Food food2 = createFood("음식이름2", "AS235");
         foodRepository.save(food1);
         foodRepository.save(food2);
-        List<Long> foods = List.of(food1.getId(), food2.getId());
 
-        PostServiceRequest request = PostServiceRequest.builder()
-                .memberId(member.getId() + 1L)
-                .postImages(createPostImages())
-                .foods(foods)
-                .content("게시물 내용")
-                .build();
+        List<Food> foods = List.of(food1, food2);
+        Post post = createPost(member, postImages, foods);
+        // when
+        Long id = postRepository.save(post);
 
-        // when // then
-        assertThatThrownBy(() -> postService.createPost(request)).isInstanceOf(BusinessException.class);
+        Post findPost = postRepository.findById(id).get();
+        // then
+        assertThat(findPost.getPostFoods()).hasSize(2);
+        assertThat(findPost.getContent()).isEqualTo("내용");
     }
 
     @Test
-    @DisplayName("음식, 회원번호, 이미지를 받아 게시물을 생성한다.")
-    void save() {
-        // given
-        Member member = createMember();
-        memberRepository.save(member);
+    @DisplayName("저장된 게시물을 id값으로 조회할 수 있다.")
+    void findById() {
+        Member member = memberRepository.save(createMember());
+
+        List<Map<String, String>> postImages = createPostImages();
 
         Food food1 = createFood("음식이름1", "AS234");
         Food food2 = createFood("음식이름2", "AS235");
         foodRepository.save(food1);
         foodRepository.save(food2);
-        List<Long> foods = List.of(food1.getId(), food2.getId());
 
-        PostServiceRequest request = PostServiceRequest.builder()
-                .memberId(member.getId())
-                .postImages(createPostImages())
-                .foods(foods)
-                .content("게시물 내용")
-                .build();
+        List<Food> foods = List.of(food1, food2);
+        Post post = createPost(member, postImages, foods);
 
+        Long id = postRepository.save(post);
         // when
-        PostResponse postResponse = postService.createPost(request);
-
+        Post findPost = postRepository.findById(id).get();
         // then
-        assertThat(postResponse.getId()).isNotNull();
-        assertThat(postResponse.getPostImages()).hasSize(2);
-        assertThat(postResponse.getContent()).isEqualTo("게시물 내용");
+        assertThat(findPost.getPostFoods()).hasSize(2);
+        assertThat(findPost.getContent()).isEqualTo("내용");
     }
 
     private static List<Map<String, String>> createPostImages() {
@@ -106,6 +102,15 @@ class PostServiceTest {
                 .foodCode(foodCode)
                 .foodSize(1231)
                 .calorie(12312)
+                .build();
+    }
+
+    private static Post createPost(Member member, List<Map<String, String>> postImages, List<Food> foods) {
+        return Post.builder()
+                .member(member)
+                .postImages(postImages)
+                .foods(foods)
+                .content("내용")
                 .build();
     }
 }

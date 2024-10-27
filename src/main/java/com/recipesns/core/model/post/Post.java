@@ -1,65 +1,64 @@
 package com.recipesns.core.model.post;
 
+import com.recipesns.core.model.BaseEntity;
+import com.recipesns.core.model.food.Food;
+import com.recipesns.core.model.member.Member;
+import io.hypersistence.utils.hibernate.type.json.JsonType;
+import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.relational.core.mapping.MappedCollection;
-import org.springframework.data.relational.core.mapping.Table;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Type;
 
-import java.time.LocalDateTime;
-import java.util.Objects;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
-@Table("POST")
+import static jakarta.persistence.FetchType.*;
+
 @Getter
-public class Post {
+@Entity
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class Post extends BaseEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "post_id")
     private Long id;
-    private Long memberId;
-    private Long likeCount;
-    private String content;
-    private PostImages images;
-    @MappedCollection(idColumn = "POST_ID")
-    private Set<PostFood> foods;
 
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member;
+
+    @Type(JsonType.class)
+    @Column(name = "post_images", columnDefinition = "longtext")
+    private List<Map<String, String>> postImages;
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    private List<PostFood> postFoods = new ArrayList<>();
+
+    @OneToMany(mappedBy = "post")
+    private List<PostLike> postLikes = new ArrayList<>();
+
+    private String content;
 
     @Builder
-    public Post(Long memberId, Long likeCount, String content, PostImages images, Set<PostFood> foods) {
-        this.memberId = memberId;
-        this.likeCount = likeCount;
-        this.images = images;
+    private Post(Member member, List<Map<String, String>> postImages, List<Food> foods, String content) {
+        this.member = member;
+        this.postImages = postImages;
+        this.postFoods = foods.stream()
+                .map(food -> PostFood.builder()
+                        .post(this)
+                        .food(food)
+                        .build()
+                )
+                .toList();
         this.content = content;
-        this.foods = foods;
-        this.createdAt = LocalDateTime.now();
-        this.updatedAt = LocalDateTime.now();
     }
 
-    public void increaseLikeCount() {
-        this.likeCount = this.likeCount + 1;
+    public static Post create(Member member, List<Map<String, String>> postImages, List<Food> foods, String content) {
+        return new Post(member, postImages, foods, content);
     }
 
-    public void decreaseLikeCount() {
-        this.likeCount = this.likeCount - 1;
-    }
-
-    // 테스트용
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Post post = (Post) o;
-        return Objects.equals(memberId, post.memberId) && Objects.equals(content, post.content) && Objects.equals(images, post.images) && Objects.equals(createdAt, post.createdAt);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(memberId, content, images, createdAt);
-    }
 }
