@@ -9,6 +9,7 @@ import com.recipesns.core.repository.member.MemberRepository;
 import com.recipesns.core.repository.post.PostLikeRepository;
 import com.recipesns.core.repository.post.PostRepository;
 import com.recipesns.core.service.post.request.PostLikeServiceRequest;
+import com.recipesns.core.service.post.response.PostLikeResponse;
 import com.recipesns.web.exception.BusinessException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -100,6 +102,35 @@ class PostLikeServiceTest {
         assertThatThrownBy(() -> postLikeService.postLike(request))
                 .hasMessageContaining("회원 정보를 찾을 수 없습니다.")
                 .isInstanceOf(BusinessException.class);
+    }
+
+    @Test
+    @DisplayName("좋아요를 해제할 수 있다.")
+    void post_disLike() {
+        // given
+        Member member = memberRepository.save(createMember());
+        System.out.println(member.getId());
+        List<Map<String, String>> postImages = createPostImages();
+
+        Food food1 = createFood("음식이름1", "AS234");
+        Food food2 = createFood("음식이름2", "AS235");
+        foodRepository.save(food1);
+        foodRepository.save(food2);
+
+        List<Food> foods = List.of(food1, food2);
+        Post post = createPost(member, postImages, foods);
+        postRepository.save(post);
+
+        PostLikeServiceRequest request = PostLikeServiceRequest.builder()
+                .memberId(member.getId())
+                .postId(post.getId())
+                .build();
+        postLikeService.postLike(request);
+        // when
+        PostLikeResponse postLikeResponse = postLikeService.postRemoveLike(request);
+        // then
+        assertThatThrownBy(() -> postLikeRepository.findById(postLikeResponse.getPostLikeId()).get())
+                .isInstanceOf(NoSuchElementException.class);
     }
 
 

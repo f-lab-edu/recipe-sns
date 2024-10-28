@@ -35,8 +35,25 @@ public class PostLikeService {
                 .ifPresent(postLike -> {
                     throw BusinessError.DUPLICATE_LIKE_ERROR.exception();
                 });
+
         PostLike postLike = PostLike.create(post, member);
         postLikeRepository.save(postLike);
+        return PostLikeResponse.of(postLike);
+    }
+
+    @Transactional
+    public PostLikeResponse postRemoveLike(PostLikeServiceRequest request) {
+
+        Member member = memberRepository.findById(request.getMemberId())
+                .orElseThrow(BusinessError.POST_MEMBER_NOT_FOUND_ERROR::exception);
+
+        Post post = postRepository.findById(request.getPostId())
+                .orElseThrow(BusinessError.POST_NOT_FOUND_ERROR::exception);
+
+        PostLike postLike = postLikeRepository.findByPostIdAndMemberId(post.getId(), member.getId())
+                .orElseThrow(BusinessError.POST_LIKE_NOT_FOUND_ERROR::exception);
+
+        postLikeRepository.deleteById(postLike.getId());
         return PostLikeResponse.of(postLike);
     }
 }
