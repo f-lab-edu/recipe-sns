@@ -33,4 +33,9 @@ public class PostController {
     public ApiResponse<PostLikeResponse> createPostLike(@Login Long memberId, @RequestBody PostLikeCreateRequest request) {
         return ApiResponse.success(postLikeService.postLike(PostLikeServiceRequest.of(request.getPostId(), memberId)));
     }
+
+    @PostMapping("/remove_like")
+    public ApiResponse<PostLikeResponse> removePostLike(@Login Long memberId, @RequestBody PostLikeCreateRequest request) {
+        return ApiResponse.success(postLikeService.postRemoveLike(PostLikeServiceRequest.of(request.getPostId(), memberId)));
+    }
 }
