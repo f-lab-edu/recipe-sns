@@ -9,8 +9,8 @@ public enum BusinessError {
     DUPLICATE_LIKE_ERROR(4001, "좋아요를 중복으로 할 수 없습니다"),
     POST_LIKE_NOT_FOUND_ERROR(4002, "좋아요 데이터를 찾을 수 없습니다"),
     POST_NOT_FOUND_ERROR(4003, "게시물을 찾을 수 없습니다"),
-    POST_FOOD_NOT_FOUND_ERROR(4004, "선택한 음식을 찾을 수 없습니다."),
-    POST_MEMBER_NOT_FOUND_ERROR(4005, "회원 정보를 찾을 수 없습니다."),
+    POST_FOOD_NOT_FOUND_ERROR(4004, "선택한 음식을 찾을 수 없습니다"),
+    POST_MEMBER_NOT_FOUND_ERROR(4005, "회원 정보를 찾을 수 없습니다"),
 
     // MEMBER 4100번대
     MEMBER_DUPLICATE_ERROR(4101, "중복된 아이디를 사용할 수 없습니다"),
@@ -21,7 +21,9 @@ public enum BusinessError {
     MEMBER_NICKNAME_ERROR(4106, "닉네임을 입력해주세요"),
     MEMBER_LOGIN_ERROR(4107, "로그인 후 이용할 수 있습니다"),
     MEMBER_LOGIN_USERNAME_ERROR(4108, "아이디를 입력해주세요"),
-    MEMBER_LOGIN_PASSWORD_ERROR(4109, "비밀번호를 입력해주세요");
+    MEMBER_LOGIN_PASSWORD_ERROR(4109, "비밀번호를 입력해주세요"),
+    MEMBER_FOLLOW_DUPLICATE_ERROR(4110, "이미 팔로우중인 회원입니다"),
+    MEMBER_FOLLOW_NOT_FOUND_ERROR(4111, "팔로우 정보가 없습니다");
 
     private final int code;
     private final String message;
