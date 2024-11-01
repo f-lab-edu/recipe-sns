@@ -81,6 +81,26 @@ class MemberFollowMainRepositoryTest {
         assertThatThrownBy(() -> memberFollowMainRepository.findById(id).get()).isInstanceOf(NoSuchElementException.class);
     }
 
+    @Test
+    @DisplayName("followId와 followingId로 조회할 수 있다.")
+    void findByFollowerIdAndFollowingId() {
+        // given
+        Member member1 = memberRepository.save(createMember());
+        Member member2 = memberRepository.save(createMember());
+
+        MemberFollow memberFollow = MemberFollow.builder()
+                .follower(member1)
+                .following(member2)
+                .build();
+
+        memberFollowMainRepository.save(memberFollow);
+        // when
+        MemberFollow findMemberFollow = memberFollowMainRepository.findByFollowerIdAndFollowingId(member1.getId(), member2.getId()).get();
+        // then
+        assertThat(findMemberFollow.getFollower().getId()).isEqualTo(member1.getId());
+        assertThat(findMemberFollow.getFollowing().getId()).isEqualTo(member2.getId());
+    }
+
     private static Member createMember() {
         return Member.builder()
                 .username("rlagudwog")

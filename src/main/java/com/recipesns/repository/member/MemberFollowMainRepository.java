@@ -19,6 +19,11 @@ public class MemberFollowMainRepository implements MemberFollowRepository {
     }
 
     @Override
+    public Optional<MemberFollow> findByFollowerIdAndFollowingId(Long followerId, Long followingId) {
+        return jpaMemberFollowRepository.findByFollowerIdAndFollowingId(followerId, followingId);
+    }
+
+    @Override
     public Optional<MemberFollow> findById(Long id) {
         return jpaMemberFollowRepository.findById(id);
     }

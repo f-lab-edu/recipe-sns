@@ -82,7 +82,7 @@ class PostLikeServiceTest {
     void memberNotFoundTest() {
         // given
         Member member = memberRepository.save(createMember());
-        System.out.println(member.getId());
+
         List<Map<String, String>> postImages = createPostImages();
 
         Food food1 = createFood("음식이름1", "AS234");
@@ -100,7 +100,7 @@ class PostLikeServiceTest {
                 .build();
         // when // then
         assertThatThrownBy(() -> postLikeService.postLike(request))
-                .hasMessageContaining("회원 정보를 찾을 수 없습니다.")
+                .hasMessageContaining("회원 정보를 찾을 수 없습니다")
                 .isInstanceOf(BusinessException.class);
     }
 

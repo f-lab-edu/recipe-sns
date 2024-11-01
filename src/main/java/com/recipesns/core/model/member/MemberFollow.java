@@ -30,4 +30,8 @@ public class MemberFollow extends BaseEntity {
         this.follower = follower;
         this.following = following;
     }
+
+    public static MemberFollow create(Member follower, Member following) {
+        return new MemberFollow(follower, following);
+    }
 }

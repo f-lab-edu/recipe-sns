@@ -8,4 +8,5 @@ public interface MemberFollowRepository {
     MemberFollow save(MemberFollow memberFollow);
     Optional<MemberFollow> findById(Long id);
     Long deleteById(Long id);
+    Optional<MemberFollow> findByFollowerIdAndFollowingId(Long followerId, Long followingId);
 }
