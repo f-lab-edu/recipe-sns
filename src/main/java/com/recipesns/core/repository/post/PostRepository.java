@@ -12,4 +12,6 @@ public interface PostRepository {
     Optional<Post> findById(Long id);
 
     Page<Post> findPostsByFollowedMembers(Long memberId, Pageable pageable);
+
+    Optional<Post> findByIdForUpdate(Long postId);
 }

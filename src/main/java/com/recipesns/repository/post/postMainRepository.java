@@ -30,4 +30,9 @@ public class postMainRepository implements PostRepository {
     public Page<Post> findPostsByFollowedMembers(Long memberId, Pageable pageable) {
         return jpaPostRepository.findPostsByFollowedMembers(memberId, pageable);
     }
+
+    @Override
+    public Optional<Post> findByIdForUpdate(Long postId) {
+        return jpaPostRepository.findByIdForUpdate(postId);
+    }
 }
