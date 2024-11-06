@@ -3,6 +3,8 @@ package com.recipesns.repository.post;
 import com.recipesns.core.model.post.Post;
 import com.recipesns.core.repository.post.PostRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -22,5 +24,15 @@ public class postMainRepository implements PostRepository {
     @Override
     public Optional<Post> findById(Long id) {
         return jpaPostRepository.findById(id);
+    }
+
+    @Override
+    public Page<Post> findPostsByFollowedMembers(Long memberId, Pageable pageable) {
+        return jpaPostRepository.findPostsByFollowedMembers(memberId, pageable);
+    }
+
+    @Override
+    public Optional<Post> findByIdForUpdate(Long postId) {
+        return jpaPostRepository.findByIdForUpdate(postId);
     }
 }

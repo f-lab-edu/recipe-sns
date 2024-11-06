@@ -6,10 +6,13 @@ import com.recipesns.core.model.post.Post;
 import com.recipesns.core.repository.food.FoodRepository;
 import com.recipesns.core.repository.member.MemberRepository;
 import com.recipesns.core.repository.post.PostRepository;
+import com.recipesns.core.service.post.request.PostListServiceRequest;
 import com.recipesns.core.service.post.request.PostServiceRequest;
+import com.recipesns.core.service.post.response.PostListResponse;
 import com.recipesns.core.service.post.response.PostResponse;
 import com.recipesns.web.exception.BusinessError;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,6 +40,11 @@ public class PostService {
         postRepository.save(post);
 
         return PostResponse.of(post);
+    }
+
+    public PostListResponse getPost(PostListServiceRequest request) {
+        PageRequest pageRequest = PageRequest.of(request.getPage(), request.getPage());
+        return PostListResponse.of(postRepository.findPostsByFollowedMembers(request.getMemberId(), pageRequest));
     }
 }
 

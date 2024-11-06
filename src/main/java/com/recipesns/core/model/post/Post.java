@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static jakarta.persistence.FetchType.*;
+import static jakarta.persistence.FetchType.LAZY;
 
 @Getter
 @Entity
@@ -43,8 +43,10 @@ public class Post extends BaseEntity {
 
     private String content;
 
+    private Long likeCount;
+
     @Builder
-    private Post(Member member, List<Map<String, String>> postImages, List<Food> foods, String content) {
+    private Post(Member member, List<Map<String, String>> postImages, List<Food> foods, String content ) {
         this.member = member;
         this.postImages = postImages;
         this.postFoods = foods.stream()
@@ -55,10 +57,21 @@ public class Post extends BaseEntity {
                 )
                 .toList();
         this.content = content;
+        this.likeCount = 0L;
     }
 
     public static Post create(Member member, List<Map<String, String>> postImages, List<Food> foods, String content) {
         return new Post(member, postImages, foods, content);
+    }
+
+    public Long increaseLikeCount() {
+        this.likeCount = this.likeCount + 1;
+        return this.likeCount;
+    }
+
+    public Long decreaseLikeCount() {
+        this.likeCount = this.likeCount - 1;
+        return this.likeCount;
     }
 
 }

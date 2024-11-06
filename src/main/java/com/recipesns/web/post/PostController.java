@@ -3,18 +3,18 @@ package com.recipesns.web.post;
 import com.recipesns.core.service.post.PostLikeService;
 import com.recipesns.core.service.post.PostService;
 import com.recipesns.core.service.post.request.PostLikeServiceRequest;
+import com.recipesns.core.service.post.request.PostListServiceRequest;
 import com.recipesns.core.service.post.request.PostServiceRequest;
 import com.recipesns.core.service.post.response.PostLikeResponse;
+import com.recipesns.core.service.post.response.PostListResponse;
 import com.recipesns.core.service.post.response.PostResponse;
 import com.recipesns.web.argumentresolver.Login;
 import com.recipesns.web.post.request.PostCreateRequest;
 import com.recipesns.web.post.request.PostLikeCreateRequest;
 import com.recipesns.web.response.ApiResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/posts")
@@ -23,6 +23,11 @@ public class PostController {
 
     private final PostService postService;
     private final PostLikeService postLikeService;
+
+    @GetMapping
+    public ApiResponse<PostListResponse> getPost(@Login Long memberId, Pageable pageable) {
+        return ApiResponse.success(postService.getPost(PostListServiceRequest.of(memberId, pageable.getPageNumber(), pageable.getPageSize())));
+    }
 
     @PostMapping
     public ApiResponse<PostResponse> createPost(@Login Long memberId, @RequestBody PostCreateRequest request) {

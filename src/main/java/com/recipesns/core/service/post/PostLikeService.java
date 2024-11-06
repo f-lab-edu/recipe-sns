@@ -28,7 +28,7 @@ public class PostLikeService {
         Member member = memberRepository.findById(request.getMemberId())
                 .orElseThrow(BusinessError.POST_MEMBER_NOT_FOUND_ERROR::exception);
 
-        Post post = postRepository.findById(request.getPostId())
+        Post post = postRepository.findByIdForUpdate(request.getPostId())
                 .orElseThrow(BusinessError.POST_NOT_FOUND_ERROR::exception);
 
         postLikeRepository.findByPostIdAndMemberId(post.getId(), member.getId())
@@ -38,6 +38,7 @@ public class PostLikeService {
 
         PostLike postLike = PostLike.create(post, member);
         postLikeRepository.save(postLike);
+        post.increaseLikeCount();
         return PostLikeResponse.of(postLike);
     }
 
@@ -47,13 +48,14 @@ public class PostLikeService {
         Member member = memberRepository.findById(request.getMemberId())
                 .orElseThrow(BusinessError.POST_MEMBER_NOT_FOUND_ERROR::exception);
 
-        Post post = postRepository.findById(request.getPostId())
+        Post post = postRepository.findByIdForUpdate(request.getPostId())
                 .orElseThrow(BusinessError.POST_NOT_FOUND_ERROR::exception);
 
         PostLike postLike = postLikeRepository.findByPostIdAndMemberId(post.getId(), member.getId())
                 .orElseThrow(BusinessError.POST_LIKE_NOT_FOUND_ERROR::exception);
 
         postLikeRepository.deleteById(postLike.getId());
+        post.decreaseLikeCount();
         return PostLikeResponse.of(postLike);
     }
 }
