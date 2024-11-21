@@ -1,0 +1,20 @@
+version: 0.0
+os: linux
+files:
+  - source: /
+    destination: /home/ec2-user
+hooks:
+  AfterInstall:
+    - location: scripts/stop_application.sh
+      timeout: 60
+      runas: ec2-user
+
+  ApplicationStart:
+    - location: scripts/start_application.sh
+      timeout: 60
+      runas: ec2-user
+
+  ValidateService:
+    - location: scripts/validate_service.sh
+      timeout: 60
+      runas: ec2-user
